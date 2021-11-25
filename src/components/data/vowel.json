@@ -1,0 +1,52 @@
+
+[
+    [   
+        {
+            "capital": "A",
+            "small": "a",
+            "pronounce": "ahh"
+        }
+    ],
+    [
+        {
+            "capital":"E",
+            "small":"e",
+            "pronounce":"hay"
+        }
+    ],
+    [
+        {
+            "capital":"Ẹ",
+            "small": "ẹ",
+            "pronounce":"eh"
+        }
+    ],
+    [
+        {
+            "capital": "I",
+            "small":"i",
+            "pronounce":"ee"
+        }
+    ],
+    [
+        {
+            "capital":"O",
+            "small":"o",
+            "pronounce":"oh"
+        }
+    ],
+    [
+        {
+            "capital":"Ọ",
+            "small":"ọ",
+            "pronounce":"or"
+        }
+    ],
+    [
+        {
+            "capital":"U",
+            "small":"u",
+            "pronounce":"ooh"
+        }
+    ]
+]
