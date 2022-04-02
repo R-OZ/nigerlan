@@ -17,15 +17,18 @@ code {
 
 .container{
   min-height: 100vh;
-  background-color: rgb(247, 247, 247);
+  max-width: 100vw;
+  /* background-color: rgb(247, 247, 247); */
+  background-color: rgb(0, 0, 0);
   display:flex;
   background-image: url("./components/images/689.jpg");
   background-size: cover;
   align-items: center;
-  padding-top: 3rem;
-  padding-left: 7rem;
-  padding-right: 7rem;
-  padding-bottom: 3rem;
+  /* padding-top: 3rem; */
+  padding-top: 2vh;
+  padding-left: 8vw;
+  /* padding-right: 8vw; */
+  padding-bottom: 1vh;
 }
 h1{
   color: white;
@@ -58,7 +61,8 @@ h5{
   box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
   min-height: 85vh;
   border-radius: 20px;
-  width: 280px;
+  /* width: 280px; */
+  min-width: 200px ;
   display: flex;
   flex-direction: column;
   padding-top:2rem ;
@@ -73,7 +77,8 @@ h5{
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-left: 1.5rem
+  padding-left: 1.2rem;
+  padding-right: 1rem;
 }
 #fake-horizontal{
  width: 85%;
@@ -151,34 +156,29 @@ h5{
 .word{
   width: 100%;
   padding-left: 0.5rem;
+  font-size: 2vw;
 }
-/* .word{
-  width: 70%;
-}
-h2 .word{
-  width: 70%;
-} */
-/* #partsofbody{
-  font-size: 30px;
+.wordP{
   width: 100%;
-  color: white;
-} */
+  padding-left: 0.5rem;
+  font-size: 1.4vw;
+}
 
-/*Navigation Bar*/
 a{
   text-decoration: none;
 }
 .container2{
   display: flex;
   flex-direction: column;
-  height: 85vh;
+  min-height: 30%;
   width: 70%;
-  padding-left: 3rem;
+  padding-left: 4vw;
+  /* background-color: red; */
 }
 .container2-sub{
   display: flex;
   flex-direction: column;
-  height: 85vh;
+  height: 100%;
   background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
   border-radius: 18px;
   width: 100%;
@@ -186,7 +186,7 @@ a{
 
 .nav-bar{
   background-color: rgb(10, 163, 10);
-  width: 60%;
+  font-size: 1.2vmax;
   height: 7vh;
   border-radius: 17px;
   width: 100%;
@@ -226,11 +226,13 @@ a{
   justify-content: space-between;
 }
 .module1, .module2, .module3, .module4, .module5, .module6{
-  width:260px;
+  width:28%;
+  /* width: 20%; */
   height:200px;
   text-decoration: none;
   cursor: pointer;
-  font-size: 21px;
+  /* font-size: 21px; */
+  font-size:1.3vw;
   border-radius: 20px;
   box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
@@ -807,6 +809,20 @@ border-radius: 15px;} */
   text-align: center !important;
   transition: transform 0.3s ease-in;
 }
+.messagewrongNum{
+  padding-top: 1.2rem;
+  position: absolute;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 30px;
+  color: white;
+  border-radius: 18px;
+  width: 55rem !important;
+  background-color: rgba(226, 1, 1,0.9) !important;
+  height: 13vh !important;
+  transform: translate(0%,390%);
+  text-align: center !important;
+  transition: transform 0.3s ease-in;
+}
 .messagecorrect{
   padding-top: 1.2rem;
   position: absolute;
@@ -841,6 +857,10 @@ border-radius: 15px;} */
 }
 .messagewrongCons.move{
   transform: translate(0%,300%);
+
+}
+.messagewrongNum.move{
+  transform: translate(0%,340%);
 
 }
 .messagecorrect.move{
@@ -1000,7 +1020,8 @@ border-radius: 15px;} */
 }
 
 .welcome{
-  font-size: 35px;
+  /* font-size: 35px; */
+  font-size: 2em;
   color: white;
   font-family: 'Baloo 2', cursive;
   align-items: center;

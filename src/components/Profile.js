@@ -89,17 +89,17 @@ class Profile extends React.Component{
 
                         <NavLink className='profile-handler' activeclassName='profile-handler' to="/Feedback">
                             <img alt="" id='feedback' src={feedback} />
-                            <h3 className='word'>Feedback</h3>
+                            <h3 className='wordP'>Feedback</h3>
                         </NavLink>
 
                         <div className='profile-handler' onClick={() => this.showSettings()}>
                             <img alt="" id='settings' src={settings} />
-                            <h3 className='word'>Settings</h3>
+                            <h3 className='wordP'>Settings</h3>
                         </div>
 
                         <div className='profile-handler'>
                             <img alt="" id='logout' src={logout} />
-                            <h3 className='word'>Logout</h3>
+                            <h3 className='wordP'>Logout</h3>
                         </div>
                     </div>
 

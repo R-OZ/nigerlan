@@ -8,8 +8,8 @@ import wrong from "./Sounds/wrong.mp3"
 import correct from "./Sounds/correct.mp3"
 import Fireworks from "./data/Fireworks.js"
 import BoyWave from './data/BoyWave'
-import DancingAnimal from './data/DancingAnimal'
 import "../index.css";
+import EndLecture from './EndLecture'
 import hand from "./images/body/hand.svg"
 import leg from "./images/body/leg.svg"
 import ear from "./images/body/ear.svg"
@@ -37,20 +37,7 @@ const question7=["mouth","neck","nose"]
 const question8=["back","waist","butt",]
 
 // const okayy=[<img className="body-image-q" src={head}  />,<img className="body-image-q" src={mouth}  />,<img className="body-image-q" src={back}  />]
-const Endlecture =() =>{
-    return(
-        <div className="endlec-container">
-            <div className="animation-end">
-                <div className="fireworks"><Fireworks /></div>
-                <div className="congrats-container">
-                    <div className="congrats">CONGRATULATIONS</div>
-                    <div className="congrats-text">You've come to the end of this lecture!!!</div>
-                </div>
-            </div>
-            <div className="dancing-anim"><DancingAnimal /></div>
-        </div>
-    )
-}
+
 
 const BodyDisplay = ({image1,image2,yor1,yor2,eng1,eng2,sound1, sound2}) =>{
     return(
@@ -333,7 +320,7 @@ class Bodylec extends Component{
                         this.state.info[this.state.i].map((obj)=>{
                             return <BodyDisplay image1={obj.image1} image2={obj.image2} yor1={obj.yor1} yor2={obj.yor2} eng1={obj.eng1} eng2={obj.eng2} sound1={obj.sound1} sound2={obj.sound2} />})
                     :this.state.k<11?
-                        <Endlecture />
+                        <EndLecture />
                     :this.state.k<16?
                          this.testcheck(this.state.questbig[this.state.qn], this.state.newarray[0],this.state.newarray[1],this.state.newarray[2])
                     : this.state.k<19?

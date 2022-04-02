@@ -1,29 +1,12 @@
 import { NavLink } from "react-router-dom"
 import Progressbar from "./Progressbar"
 import cancel from "./images/cancel.svg"
-import Data from "./data/alpha.json"
 import React, {Component} from "react"
 import buttonsound from "./Sounds/buttonsound.mp3"
-import DancingAnimal from './data/DancingAnimal'
-import Fireworks from "./data/Fireworks.js"
-import DataAlpha from "./data/AlphaData"
+
 import AlphaData from "./data/AlphaData"
 import { useState } from "react"
-
-const Endlecture =() =>{
-    return(
-        <div className="endlec-container">
-            <div className="animation-end">
-                <div className="fireworks"><Fireworks /></div>
-                <div className="congrats-container">
-                    <div className="congrats">CONGRATULATIONS</div>
-                    <div className="congrats-text">You've come to the end of this lecture!!!</div>
-                </div>
-            </div>
-            <div className="dancing-anim"><DancingAnimal /></div>
-        </div>
-    )
-}
+import EndLecture from "./EndLecture"
 
 
 const Tablealpha = ({ capital, small, pronounce, sound}) => {
@@ -118,7 +101,7 @@ const Alphabetslec = (props) =>{
                     {k<2?  
                         info[k].map((obj) => {
                             return <Tablealpha capital={obj.capital} small={obj.small} pronounce={obj.pronounce} sound={obj.sound} />})
-                    : <Endlecture />
+                    : <EndLecture />
                 }              
             </div>
                 <div className="lecture-footer">

@@ -13,9 +13,8 @@ import water from "./images/water.svg"
 import buttonsound from "./Sounds/buttonsound.mp3"
 import wrong from "./Sounds/wrong.mp3"
 import correct from "./Sounds/correct.mp3"
-import Fireworks from "./data/Fireworks.js"
 import BoyWave from './data/BoyWave'
-import DancingAnimal from './data/DancingAnimal'
+import EndLecture from './EndLecture'
 import "../index.css";
 import longa from "./Sounds/VowelPro/longa.mp3"
 import longe from "./Sounds/VowelPro/longe.mp3"
@@ -27,10 +26,7 @@ import longu from "./Sounds/VowelPro/longu.mp3"
 import u from "./Sounds/AlphabetsPro/u.mp3"
 import o from "./Sounds/AlphabetsPro/o.mp3"
 import e2 from "./Sounds/AlphabetsPro/e2.mp3"
-import gold from "./images/gold-medal.svg"
-import silver from "./images/silver-medal.svg"
-import bronze from "./images/bronze-medal.svg"
-import SadAnim from './data/SadAnim'
+import { EndTest } from './EndTest'
 
 
 const vowelData = [
@@ -153,62 +149,6 @@ const question7 = ["Ẹ", "E", "F", "I"];
 
 
 
-
-const Endlecture = () => {
-        // window.localStorage.setItem('Progress', window.localStorage.getItem('Progress') ? Number(window.localStorage.getItem('Progress')) + 16 : 1)
-
-    return (
-        <div className="endlec-container">
-            <div className="animation-end">
-                <div className="fireworks"><Fireworks /></div>
-                <div className="congrats-container">
-                    <div className="congrats">CONGRATULATIONS</div>
-                    <div className="congrats-text">You've come to the end of this lecture!!!</div>
-                </div>
-            </div>
-            <div className="dancing-anim"><DancingAnimal /></div>
-        </div>
-    )
-}
-
-
-// class Vowelslec extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.messageRef = React.createRef();
-//     }
-//     state = {
-//         info: vowelData,
-//         quest: question1,
-//         progy: 10,
-//         newarray: question1,
-//         newerarray: question5,
-//         quester: question5,
-//         i: 0,
-//         k: 0,
-//         fav: 0,
-//         q: 0,
-//         goldCount: 0,
-//         wrongCount: 0,
-//         correctCount: 0,
-//         correctSound: new Audio(correct),
-//         wrongSound: new Audio(wrong),
-//         audio: new Audio(buttonsound),
-//         text: "Next slide",
-//         message: null,
-//         answered: null,
-//     }
-    // showResult=()=>{
-    //     // if (this.state.correctCount < 3){
-            
-    //     //     window.localStorage.setItem('Bronze', window.localStorage.getItem('Bronze') ? Number(window.localStorage.getItem('Bronze')) + 1 : 0)
-    //     //  } 
-    //      if(this.state.correctCount < 5){
-    //             window.localStorage.setItem('Silver', window.localStorage.getItem('Silver') ? Number(window.localStorage.getItem('Silver')) + 1 : 1)
-    //      }
-    //     else{window.localStorage.setItem('Gold', window.localStorage.getItem('Gold') ? Number(window.localStorage.getItem('Gold')) + 1 : 1)
-    //     }
-    // }
     const Vowelslec = (props) =>{
         const messageRef = React.createRef();
 
@@ -233,50 +173,8 @@ const Endlecture = () => {
         const [text, setText]= useState( "Next slide");
         const [message, setMessage]= useState (null);
         const [answered, setAnswered] = useState(null);
-
-
     
-    const EndTest = () => {
-        if (correctCount > 2) {
-       
-            return (
-                <div className="endlec-container2">
-                    <div className="animation-end">
-                        <div className="fireworks2"><Fireworks /></div>
-                        <div className="congrats-container2">
-                            <div className="congrats2">CONGRATULATIONS</div>
-                            <div className="congrats-text2">You've earned a {correctCount < 3 ? "Bronze" : correctCount < 5 ? "Silver" : "Gold"} Medal</div>
-                        </div>
-                    </div>
-                    <img className="medal-score" src={correctCount < 3 ? bronze : correctCount < 5 ? silver : gold} />
-                    <div className="score-text">You scored: {correctCount} out of 7</div>
-                    {/* {
-                this.state.correctCount < 3 ?
-                window.localStorage.setItem('Bronze', window.localStorage.getItem('Bronze') ? Number(window.localStorage.getItem('Bronze')) + 1 : 0)
-                : this.state.correctCount < 5 ?
-                    window.localStorage.setItem('Silver', window.localStorage.getItem('Silver') ? Number(window.localStorage.getItem('Silver')) + 1 : 0)
-                    : window.localStorage.setItem('Gold', window.localStorage.getItem('Gold') ? Number(window.localStorage.getItem('Gold')) + 1 : 0)
-            } */}
-                </div>
-
-            )
-        }
-        else {
-            return (
-                <div className="endlec-container2">
-                    <div className="animation-end">
-                        {/* <div className="fireworks2"><Fireworks /></div> */}
-                        <div className="congrats-container2-sad">
-                            <div className="congrats2">NEVER GIVE UP!</div>
-                            <div className="congrats-text2">You've earned no Medal</div>
-                        </div>
-                    </div>
-                    <SadAnim />
-                    <div className="score-text-sad">You scored: {correctCount} out of 7</div>
-                </div>)
-        }
-    }
-    const medalScore=()=>{
+     const medalScore=()=>{
         if (correctCount>2){
             {
                    correctCount < 3 ?
@@ -506,12 +404,12 @@ const Endlecture = () => {
                                     return <VowelDisplay capital={obj.capital} pronounce={obj.pronounce} image={obj.image} example={obj.example} example2={obj.example2} sound={obj.sound} />
                                 })
                                 : k < 8 ?
-                                    <Endlecture />
+                                   <EndLecture />
                                     : k < 12 ?
                                        testcheck(newarray[0], newarray[1], newarray[2], newarray[3], correct_array)
                                         : k < 15 ?
                                             test2check(newerArray[0], newerArray[1],newerArray[2], newerArray[3],sounds[q])
-                                            : EndTest()
+                                            : EndTest(correctCount, 2,3,5, 7)
                             }
 
 

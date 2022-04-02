@@ -1,9 +1,11 @@
 import React, { Component } from "react"
+import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import cancel from "./images/cancel.svg"
 import Progressbar from "./Progressbar"
 import buttonsound from "./Sounds/buttonsound.mp3"
 import SchoolBus from "./data/SchoolBus"
+import EndLecture from "./EndLecture"
 import cap from "./images/cap.svg"
 import hot from "./images/hot.svg"
 import cold from "./images/cold.svg"
@@ -11,49 +13,50 @@ import rainy from "./images/rainy.svg"
 import cloudy from "./images/cloudy.svg"
 import windy from "./images/windy.svg"
 import sunny from "./images/sunny.svg"
-import Fireworks from "./data/Fireworks"
-import DancingAnimal from "./data/DancingAnimal"
 
 
-const Endlecture =() =>{
-    return(
-        <div className="endlec-container">
-            <div className="animation-end">
-                <div className="fireworks"><Fireworks /></div>
-                <div className="congrats-container">
-                    <div className="congrats">CONGRATULATIONS</div>
-                    <div className="congrats-text">You've come to the end of this lecture!!!</div>
-                </div>
-            </div>
-            <div className="dancing-anim"><DancingAnimal /></div>
-        </div>
-    )
-}
+const Grammarlec =(props)=>{
+    const [i, setI] = useState(0);
+    const [k, setK] = useState(0);
+    const [q, setQ] = useState(0);
+    const audio = new Audio(buttonsound);
+    const [progy, setProgy] = useState(0);
+    const [text, setText] = useState("Next Slide");
 
 
-class Grammarlec extends React.Component{
-    state={
-        i: 0,
-        k: 0,
-        q: 0,
-        audio: new Audio(buttonsound),
-        progy: 0,
-        text: "Next slide"
-    }
-    newInfo=()=>{
+    // state={
+    //     i: 0,
+    //     k: 0,
+    //     q: 0,
+    //     audio: new Audio(buttonsound),
+    //     progy: 0,
+    //     text: "Next slide"
+    // }
+    const newInfo=()=>{
         // this.setState({i: this.state.i +1});
-        this.setState({k: this.state.k +1});
-        this.state.audio.play();
-        this.setState({progy: this.state.progy +10});
-        if(this.state.k>8){this.setState({text: "Finish"})}
+        // this.setState({k: this.state.k +1});
+        // this.state.audio.play();
+        // this.setState({progy: this.state.progy +10});
+        // if(this.state.k>8){this.setState({text: "Finish"})}
+
+        setI(i+1);
+        setK(k+1);
+        audio.play();
+        setProgy(progy +10);
+        if(k>8){setText("Finish")}
+
     }
-    prevInfo=()=>{
-        this.setState({k: this.state.k -1});
-        this.setState({progy: this.state.progy -10});
-        this.setState({text: "Next slide"})
+    const prevInfo=()=>{
+        // this.setState({k: this.state.k -1});
+        // this.setState({progy: this.state.progy -10});
+        // this.setState({text: "Next slide"})
+
+        setK(k-1);
+        setProgy(progy-10);
+        setText("Next slide");
     }
 
-    Intro =()=>{
+    const Intro =()=>{
         return(
             <div className="gintro-container">
                 <div className="gintro-head">This lecture trip you are on will cover:</div> 
@@ -68,7 +71,7 @@ class Grammarlec extends React.Component{
             </div>
         )
     }
-    Adjective=()=>{
+    const Adjective=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">What is an Adjective (Ajẹtífù)?</div>
@@ -98,7 +101,7 @@ class Grammarlec extends React.Component{
         )
     }
 
-    AdjectiveColor=()=>{
+    const AdjectiveColor=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">Adjectives of color:</div>
@@ -145,7 +148,7 @@ class Grammarlec extends React.Component{
             </div>
         )
     }
-    AdjectiveWeather=()=>{
+    const AdjectiveWeather=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">Adjectives of weather:</div>
@@ -184,7 +187,7 @@ class Grammarlec extends React.Component{
             </div>
         )
     }
-    AdjectiveSize=()=>{
+    const AdjectiveSize=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">Adjectives of shape and size:</div>
@@ -242,7 +245,7 @@ class Grammarlec extends React.Component{
 
         )
     }
-    Adverbs=()=>{
+    const Adverbs=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">What is an Adverb? (Èpón)</div>
@@ -273,7 +276,7 @@ class Grammarlec extends React.Component{
             </div>
         )  
     }
-    Adverbs2=()=>{
+    const Adverbs2=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">Adverbs examples:</div>
@@ -357,7 +360,7 @@ class Grammarlec extends React.Component{
 
         )
     }
-    Nouns=()=>{
+    const Nouns=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">What is a Noun (Orúkọ)?</div>
@@ -422,7 +425,7 @@ class Grammarlec extends React.Component{
             </div>
         ) 
     }
-    Pronouns=()=>{
+    function Pronouns (){
         return(
             <div className="gadject-container">
                 <div className="gadject-head">What is a Pronoun (Àrọpò Orúkọ)?</div>
@@ -484,11 +487,11 @@ class Grammarlec extends React.Component{
             </div>
         ) 
     }
-    cumProgy=()=>{
-        this.props.progy(17)
+    const cumProgy=()=>{
+        props.progy(17)
     }
 
-    Verbs=()=>{
+    const Verbs=()=>{
         return(
             <div className="gadject-container">
                 <div className="gadject-head">What is a Verb (Òrò ìse)?</div>
@@ -552,57 +555,57 @@ class Grammarlec extends React.Component{
     }
    
 
-    render(){
+    
     return (
         <div className="lecture" >
                 <div className="prog">
                     <NavLink to="/" exact><img id='cancel' src={cancel} /></NavLink>
-                    <Progressbar bgcolor="#ff0099" completed={this.state.progy} />
+                    <Progressbar bgcolor="#ff0099" completed={progy} />
                 </div> 
                 <div className="lecture-content">
                    
                     <div className="lecture-stuff">
-                        {this.state.k<1?
-                            this.Intro()
-                        : this.state.k<2?
-                            this.Adjective()
-                        :this.state.k<3?
-                            this.AdjectiveColor()
-                        :this.state.k<4?
-                            this.AdjectiveWeather()
-                        :this.state.k<5?
-                            this.AdjectiveSize()
-                        :this.state.k<6?
-                            this.Adverbs()
-                        :this.state.k<7?
-                            this.Adverbs2()
-                        :this.state.k<8?
-                            this.Nouns()
-                        :this.state.k<9?
-                            this.Pronouns()
-                        :this.state.k<10?
-                            this.Verbs()
-                        : <Endlecture />
+                        {k<1?
+                            Intro()
+                        :k<2?
+                           Adjective()
+                        :k<3?
+                           AdjectiveColor()
+                        :k<4?
+                            AdjectiveWeather()
+                        :k<5?
+                            AdjectiveSize()
+                        :k<6?
+                            Adverbs()
+                        :k<7?
+                            Adverbs2()
+                        :k<8?
+                            Nouns()
+                        :k<9?
+                            Pronouns()
+                        :k<10?
+                            Verbs()
+                        : <EndLecture />
                         }
                     </div>
                     
                
                 </div>
-                {this.state.k<10? <div className="btn-container">
-        <button className="btn2" disabled={this.state.k<1? true: false} onClick={()=>this.prevInfo()}>
+                {k<10? <div className="btn-container">
+        <button className="btn2" disabled={k<1? true: false} onClick={()=>prevInfo()}>
             <span id="spann"  >Previous</span>
         </button>
         
-        <button className="btn" disabled={this.state.k>9? true: false} onClick={()=>this.newInfo()}>
-            <span id="spann"  >{this.state.text}</span>
+        <button className="btn" disabled={k>9? true: false} onClick={()=>newInfo()}>
+            <span id="spann"  >{text}</span>
         </button>
         </div>
-        : <NavLink className="test-btn" to="/" className="test-btn" activeclassName="test-btn" exact="/" onClick={()=>this.cumProgy()}>
+        : <NavLink className="test-btn" to="/" className="test-btn" activeclassName="test-btn" exact="/" onClick={()=>cumProgy()}>
         <span id="spann">Finish</span>
     </NavLink>}
             </div>
     )
-    }
+    
 }
 
 export default Grammarlec

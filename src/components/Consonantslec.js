@@ -2,13 +2,12 @@ import { NavLink } from "react-router-dom"
 import Progressbar from "./Progressbar"
 import cancel from "./images/cancel.svg"
 import React, {Component} from "react"
+import { useState } from "react"
 import ConsData from "./ConsData"
 import buttonsound from "./Sounds/buttonsound.mp3"
 import wrong from "./Sounds/wrong.mp3"
 import correct from "./Sounds/correct.mp3"
-import Fireworks from "./data/Fireworks.js"
 import BoyWave from './data/BoyWave'
-import DancingAnimal from './data/DancingAnimal'
 import "../index.css";
 import p from "./Sounds/AlphabetsPro/p.mp3"
 import w from "./Sounds/AlphabetsPro/w.mp3"
@@ -16,10 +15,9 @@ import j from "./Sounds/AlphabetsPro/j.mp3"
 import ks from "./Sounds/AlphabetsPro/k.mp3"
 import r from "./Sounds/AlphabetsPro/r.mp3"
 import t from "./Sounds/AlphabetsPro/t.mp3"
-import gold from "./images/gold-medal.svg"
-import silver from "./images/silver-medal.svg"
-import bronze from "./images/bronze-medal.svg"
-import SadAnim from './data/SadAnim'
+
+import EndLecture from "./EndLecture"
+import { EndTest } from "./EndTest"
 
 
 const question1=["Y", "A", "U", "O"];
@@ -38,20 +36,7 @@ const question12=["K", "B", "D", "I"];
 const question13=["R", "O", "A", "U"];
 const question14=["T", "Ẹ", "S", "Gb"];
 
-const Endlecture =() =>{
-    return(
-        <div className="endlec-container">
-            <div className="animation-end">
-                <div className="fireworks"><Fireworks /></div>
-                <div className="congrats-container">
-                    <div className="congrats">CONGRATULATIONS</div>
-                    <div className="congrats-text">You've come to the end of this lecture!!!</div>
-                </div>
-            </div>
-            <div className="dancing-anim"><DancingAnimal /></div>
-        </div>
-    )
-}
+
 
 const ConsonantDisplay = ({ capital, pronounce, image, example, capital2, pronounce2, image2, example2, examplem, examplem2, sound1, sound2 }) => {
     if(pronounce =="gbh"){
@@ -144,82 +129,104 @@ const ConsonantDisplay = ({ capital, pronounce, image, example, capital2, pronou
        )}
     }
 
-class Consonantslec extends Component{
-    constructor(props){
-        super(props);
-        this.messageRef = React.createRef();
-    }
-    state={
-        info: ConsData,
-        progy: 18,
-        quest: question1,
-        newarray: question1,
-        i: 0,
-        fav:0,
-        k: 0,
-        q: 0,
-        wrongCount:0,
-        correctCount: 0,
-        correctSound: new Audio(correct),
-        wrongSound: new Audio(wrong),
-        audio: new Audio(buttonsound),
-        text: "Next slide",
-        message: null,
-        answered: null
-    }
+// class Consonantslec extends Component{
+//     constructor(props){
+//         super(props);
+//         this.messageRef = React.createRef();
 
-    medalScore=()=>{
-        if (this.state.correctCount>4){
+const Consonantslec = (props) =>{
+    // state={
+    //     info: ConsData,
+    //     progy: 18,
+    //     quest: question1,
+    //     newarray: question1,
+    //     i: 0,
+    //     fav:0,
+    //     k: 0,
+    //     q: 0,
+    //     wrongCount:0,
+    //     correctCount: 0,
+    //     correctSound: new Audio(correct),
+    //     wrongSound: new Audio(wrong),
+    //     audio: new Audio(buttonsound),
+    //     text: "Next slide",
+    //     message: null,
+    //     answered: null
+    // }
+    const [info, setInfo] = useState(ConsData);
+    const [progy, setProgy] = useState(18);
+    const [quest, setQuest] = useState(question1);
+    const [newarray, setNewarray] = useState(question1);
+    const [newerarray, setNewerarray] = useState(question9);
+    const [i, setI] = useState(0);
+    const [fav, setFav] = useState(0);
+    const [k, setK] = useState(0);
+    const [q, setQ] = useState(0);
+    const [wrongCount, setWrongCount] = useState(0);
+    const [correctCount, setCorrectCount] = useState(0);
+    const correctSound = new Audio(correct)
+    const wrongSound = new Audio(wrong)
+    const audio = new Audio(buttonsound);
+    const [text, setText] = useState("Next slide");
+    const [message, setMessage] = useState(null);
+    const [answered, setAnswered] = useState(null);
+    
+    const messageRef = React.createRef()
+
+
+    
+    const medalScore=()=>{
+        if (correctCount>4){
             {
-                    this.state.correctCount < 7 ?
-                        this.props.calcGold(0,0,1)
-                    :this.state.correctCount < 11 ?
-                        this.props.calcGold(0,1,0)
-                    :  this.props.calcGold(1,0,0)
+                    correctCount < 7 ?
+                        props.calcGold(0,0,1)
+                    :correctCount < 11 ?
+                        props.calcGold(0,1,0)
+                    :  props.calcGold(1,0,0)
 
             }
         }
         else{
-            this.props.calcGold(0,0,0)
+            props.calcGold(0,0,0)
         }
-        this.props.progy(17)
+        props.progy(17)
 
     }
 
-    EndTest =()=>{
-        if(this.state.correctCount>4){
-            return(
-                <div className="endlec-container2">
-                    <div className="animation-end">
-                        <div className="fireworks2"><Fireworks /></div>
-                        <div className="congrats-container2">
-                            <div className="congrats2">CONGRATULATIONS</div>
-                            <div className="congrats-text2">You've earned a {this.state.correctCount<7? "Bronze":this.state.correctCount<11? "Silver": "Gold"} Medal</div>
-                        </div>
-                    </div>
-                    <img className="medal-score" src={this.state.correctCount<7? bronze :this.state.correctCount<11? silver: gold} />
-                    <div className="score-text">You scored: {this.state.correctCount} out of 14</div>
-                </div>
+    // const EndTest =()=>{
+    //     if(tcorrectCount>4){
+    //         return(
+    //             <div className="endlec-container2">
+    //                 <div className="animation-end">
+    //                     <div className="fireworks2"><Fireworks /></div>
+    //                     <div className="congrats-container2">
+    //                         <div className="congrats2">CONGRATULATIONS</div>
+    //                         <div className="congrats-text2">You've earned a {this.state.correctCount<7? "Bronze":this.state.correctCount<11? "Silver": "Gold"} Medal</div>
+    //                     </div>
+    //                 </div>
+    //                 <img className="medal-score" src={.correctCount<7? bronze :this.state.correctCount<11? silver: gold} />
+    //                 <div className="score-text">You scored: {this.state.correctCount} out of 14</div>
+    //             </div>
         
-            )
-        }
-        else{
-            return(
-                <div className="endlec-container2">
-                    <div className="animation-end">
-                        {/* <div className="fireworks2"><Fireworks /></div> */}
-                        <div className="congrats-container2-sad">
-                            <div className="congrats2">NEVER GIVE UP!</div>
-                            <div className="congrats-text2">You've earned no Medal</div>
-                        </div>
-                    </div>
-                    <SadAnim />
-                    <div className="score-text-sad">You scored: {this.state.correctCount} out of 14</div>
-                </div>)
-        }
-    }
+    //         )
+    //     }
+    //     else{
+    //         return(
+    //             <div className="endlec-container2">
+    //                 <div className="animation-end">
+    //                     {/* <div className="fireworks2"><Fireworks /></div> */}
+    //                     <div className="congrats-container2-sad">
+    //                         <div className="congrats2">NEVER GIVE UP!</div>
+    //                         <div className="congrats-text2">You've earned no Medal</div>
+    //                     </div>
+    //                 </div>
+    //                 <SadAnim />
+    //                 <div className="score-text-sad">You scored: {correctCount} out of 14</div>
+    //             </div>)
+    //     }
+    // }
 
-    testcheck = (a,b,c,d,) =>{
+    const testcheck = (a,b,c,d,) =>{
         let correct_ans = ["Y", "Gb", "D", "F", "S", "L", "H", "M"];
         let result = null;
         for (let i=0; i<9; i++){
@@ -237,21 +244,21 @@ class Consonantslec extends Component{
             }
         }
         const handleAnswer = (ans) =>{
-            this.setState({answered: ans});
-            const message = this.messageRef.current;
+            setAnswered(ans);
+            const message = messageRef.current;
             if(ans === "Y"| ans ==="Gb"| ans =="D"| ans ==="F"| ans ==="S"| ans ==="L"| ans ==="H" | ans ==="M"){
-                this.setState({message:'CORRECT!!!'});
-                this.state.correctSound.play();
+                setMessage("CORRECT!!!");
+                correctSound.play();
                 message.classList.toggle('move')
                 message.classList.toggle('move')
-                this.setState({correctCount: this.state.correctCount +1});
+               setCorrectCount(correctCount+1);
 
             }
             else{
-                this.setState({message:'INCORRECT, the correct answer is' + " " + result});
-                this.state.wrongSound.play();
+                setMessage('INCORRECT, the correct answer is' + " " + result);
+                wrongSound.play();
                 message.classList.toggle('move');
-                this.setState({wrongCount: this.state.wrongCount +1});
+                setWrongCount(wrongCount+1);
             }
 
 
@@ -260,21 +267,21 @@ class Consonantslec extends Component{
         return(
             <div className="vtest-container">
                 <div className="vobj-container">
-                    <button className="vobj"  disabled={this.state.answered != null? true: false} onClick={()=>handleAnswer(a)}>{a}</button>
+                    <button className="vobj"  disabled={answered != null? true: false} onClick={()=>handleAnswer(a)}>{a}</button>
 
-                    <button className="vobj" disabled={this.state.answered != null? true: false} onClick={()=>handleAnswer(b)}>{b}</button>
+                    <button className="vobj" disabled={answered != null? true: false} onClick={()=>handleAnswer(b)}>{b}</button>
                 </div>
 
                 <div className="vobj-container">
-                    <button className="vobj" disabled={this.state.answered!= null? true: false} onClick={()=>handleAnswer(c)}>{c}</button>
+                    <button className="vobj" disabled={answered!= null? true: false} onClick={()=>handleAnswer(c)}>{c}</button>
 
-                    <button className="vobj" disabled={this.state.answered!= null? true: false} onClick={()=>handleAnswer(d)}>{d}</button>
+                    <button className="vobj" disabled={answered!= null? true: false} onClick={()=>handleAnswer(d)}>{d}</button>
                 </div>
             </div>
             )
     }
 
-    test2check =(e,f,g,h, sounder)=>{
+    const test2check =(e,f,g,h, sounder)=>{
         let correct_ans = ["P","W","J","K","R","T"];
         let result = null;
         for (let i=0; i<6; i++){
@@ -293,21 +300,21 @@ class Consonantslec extends Component{
         }
 
         const handleAnswer = (ans) =>{
-            this.setState({answered: ans});
-            const message = this.messageRef.current;
+            setAnswered(ans);
+            const message = messageRef.current;
             if(ans =="P"| ans ==="W"| ans ==="J"|ans =="K"| ans ==="R"| ans ==="T"){
-                this.setState({message:'CORRECT!!!'});
-                this.state.correctSound.play();
+               setMessage('CORRECT!!!');
+                correctSound.play();
                 message.classList.toggle('move')
                 message.classList.toggle('move')
-                this.setState({correctCount: this.state.correctCount +1});
+                setCorrectCount(correctCount +1);
                
             }
             else{
-                this.setState({message:'INCORRECT, the correct answer is' + " " + result});
-                this.state.wrongSound.play();
+                setMessage('INCORRECT, the correct answer is' + " " + result);
+                wrongSound.play();
                 message.classList.toggle('move');
-                this.setState({wrongCount: this.state.wrongCount +1});
+                setWrongCount(wrongCount +1);
             }
         }
 
@@ -322,150 +329,146 @@ class Consonantslec extends Component{
 
                 <div className="vtest2-obj-container">
                     <div className="vtest2-obj">
-                        <button className="vobj2" disabled={this.state.answered != null? true: false} onClick={()=>handleAnswer(e)}>{e}</button>
-                        <button className="vobj2" disabled={this.state.answered != null? true: false} onClick={()=>handleAnswer(f)}>{f}</button>
-                        <button className="vobj2" disabled={this.state.answered != null? true: false} onClick={()=>handleAnswer(g)}>{g}</button>
-                        <button className="vobj2" disabled={this.state.answered != null? true: false} onClick={()=>handleAnswer(h)}>{h}</button>
+                        <button className="vobj2" disabled={answered != null? true: false} onClick={()=>handleAnswer(e)}>{e}</button>
+                        <button className="vobj2" disabled={answered != null? true: false} onClick={()=>handleAnswer(f)}>{f}</button>
+                        <button className="vobj2" disabled={answered != null? true: false} onClick={()=>handleAnswer(g)}>{g}</button>
+                        <button className="vobj2" disabled={answered != null? true: false} onClick={()=>handleAnswer(h)}>{h}</button>
                     </div>
                 </div>
             </div>
         )
     }
 
-    newdata = () =>{
-        this.setState({k: this.state.k +1});
-        this.state.audio.play();
-        this.setState({newarray: this.state.quest.sort(() => Math.random() - 0.5)});
-        this.setState({i: this.state.i +1});
-        this.setState({progy: this.state.progy +4});
-        if(this.state.k>7){
-            this.setState({text: "Finish"});
-        }
+    const newdata = () =>{
+        setK(k+1);        
+        audio.play();
+        setNewarray(quest.sort(() => Math.random() - 0.5));
+        setI (i +1);
+        setProgy(progy +4);
+        if(k>7){setText("Finish");}
     }
-    newtestinfo = ()=>{
-        this.setState({answered: null});
-        this.state.audio.play();
-        this.setState({progy: this.state.progy +3});
+    const newtestinfo = ()=>{
+        setAnswered(null);
+        audio.play();
+        setProgy(progy +3);
         
-        this.setState({fav: this.state.fav +1});
-        this.setState({k: this.state.k +1});
-        // this.setState({newarray: this.state.quest.sort(() => Math.random() - 0.5)});
+        setFav(fav +1);
+        setK(k+1);
+        // this.setState({newarray: quest.sort(() => Math.random() - 0.5)});
         
-        if(this.state.fav>7){
-            this.setState({q: this.state.q +1})
+        if(fav>7){
+           setQ(q +1);
 
         }
 
-        if(this.state.fav==0){this.setState({newarray: question2.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==1){this.setState({newarray: question3.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==2){this.setState({newarray: question4.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==3){this.setState({newarray: question5.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==4){this.setState({newarray: question6.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==5){this.setState({newarray: question7.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==6){this.setState({newarray: question8.sort(() => Math.random() - 0.5)})};
+        if(fav==0){setNewarray(question2.sort(() => Math.random() - 0.5))};
+        if(fav==1){setNewarray(question3.sort(() => Math.random() - 0.5))};
+        if(fav==2){setNewarray(question4.sort(() => Math.random() - 0.5))};
+        if(fav==3){setNewarray(question5.sort(() => Math.random() - 0.5))};
+        if(fav==4){setNewarray(question6.sort(() => Math.random() - 0.5))};
+        if(fav==5){setNewarray(question7.sort(() => Math.random() - 0.5))};
+        if(fav==6){setNewarray(question8.sort(() => Math.random() - 0.5))};
 
-        if(this.state.fav==7){this.setState({newerarray: question9.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==8){this.setState({newerarray: question10.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==9){this.setState({newerarray: question11.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==10){this.setState({newerarray: question12.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==11){this.setState({newerarray: question13.sort(() => Math.random() - 0.5)})};
-        if(this.state.fav==12){this.setState({newerarray: question14.sort(() => Math.random() - 0.5)})};
+        if(fav==7){setNewerarray(question9.sort(() => Math.random() - 0.5))};
+        if(fav==8){setNewerarray(question10.sort(() => Math.random() - 0.5))};
+        if(fav==9){setNewerarray(question11.sort(() => Math.random() - 0.5))};
+        if(fav==10){setNewerarray(question12.sort(() => Math.random() - 0.5))};
+        if(fav==11){setNewerarray(question13.sort(() => Math.random() - 0.5))};
+        if(fav==12){setNewerarray(question14.sort(() => Math.random() - 0.5))};
 
-        // if(this.state.k>9){
-        //     this.setState({q: this.state.q +1});
+        // if(k>9){
+        //     this.setState({q: q +1});
         // }
 
 
-        this.setState({message: null});
-        const message = this.messageRef.current;
+        setMessage(null);
+        const message = messageRef.current;
         message.classList.toggle('move')
 
-        console.log("correct count is : " + this.state.correctCount);
-        console.log("Wrong count is : "+ this.state.wrongCount);
+        console.log("correct count is : " + correctCount);
+        console.log("Wrong count is : "+ wrongCount);
     }
-    previnfo=()=>{
-        this.setState({k: this.state.k -1});
-        this.setState({i: this.state.i -1});
-        this.setState({progy: this.state.progy -3});
-        if(this.state.k !=8){
-            this.setState({text: "Next slide"});
+    const previnfo=()=>{
+        setK(k -1);
+       setI(i -1);
+        setProgy(progy -3);
+        if(k !=8){
+            setText("Next slide");
         }
     }
-    correct_array = ["Y", "Gb", "D", "F", "S", "L", "H", "M"]
-    sounds = [new Audio(p),new Audio(w),new Audio(j),new Audio(ks),new Audio(r),new Audio(t)]
-    render(){
+    const correct_array = ["Y", "Gb", "D", "F", "S", "L", "H", "M"]
+    const sounds = [new Audio(p),new Audio(w),new Audio(j),new Audio(ks),new Audio(r),new Audio(t)]
         return (
             <div className="lecture" >
                 <div className="prog">
                     <NavLink to="/" exact><img id='cancel' src={cancel} /></NavLink>
-                    <Progressbar bgcolor="#40c600" completed={this.state.progy} />
+                    <Progressbar bgcolor="#40c600" completed={progy} />
                 </div>
                 <div className="lecture-content">
                     <div className="lecture-header">
-                        {this.state.k <9 ?
+                        {k <9 ?
                             <div className="lecture-title">Yoruba alphabets contains eighteen (18) consonants which are:</div>
-                        : this.state.k<10?
+                        : k<10?
                             null
-                        : this.state.k <18?
+                        : k <18?
                             <div className="lecture-title">Which of the following is a consonant?</div>
-                        : this.state.k<24?
+                        : k<24?
                          <div className="lecture-title">What consonant sound do you hear ?</div>
                         : null}
                     </div>
 
                     <div className="lecture-stuff">
-                        {this.state.k <9?
-                            this.state.info[this.state.i].map((obj) => {
+                        {k <9?
+                            info[i].map((obj) => {
                                 return <ConsonantDisplay capital={obj.capital} pronounce={obj.pronounce} image={obj.image} example={obj.example} capital2={obj.capital2} pronounce2={obj.pronounce2} examplem={obj.examplem} examplem2={obj.examplem2} image2={obj.image2}example2={obj.example2} sound1={obj.sound1} sound2={obj.sound2}/>})
-                        : this.state.k<10?
-                            <Endlecture />
-                        : this.state.k<18 ?
-                            this.testcheck(this.state.newarray[0],this.state.newarray[1],this.state.newarray[2],this.state.newarray[3],this.correct_array)
-                        : this.state.k<24?  
-                            this.test2check(this.state.newerarray[0],this.state.newerarray[1],this.state.newerarray[2],this.state.newerarray[3], this.sounds[this.state.q])
-                        :this.EndTest()
+                        : k<10?
+                            <EndLecture />
+                        : k<17 ?
+                            testcheck(newarray[0],newarray[1],newarray[2],newarray[3],correct_array)
+                        : k<24?  
+                            test2check(newerarray[0],newerarray[1],newerarray[2],newerarray[3], sounds[q])
+                        : EndTest(correctCount, 4,7,11, 14)
                             }
                         
-                        {console.log(this.state.i)}
-                        {console.log("this is K:"+ this.state.k)}
-                        {console.log("this is q:"+ this.state.q)}
+                        {console.log(i)}
+                        {console.log("this is K:"+ k)}
+                        {console.log("this is q:"+ q)}
 
-                        {console.log("this is fav:"+ this.state.fav)}
+                        {console.log("this is fav:"+ fav)}
 
-                        {this.state.k>9?
-                            <div ref={this.messageRef} className={this.state.message !="CORRECT!!!"? "messagewrongCons":"messagecorrectCons"}>{this.state.message}</div>
+                        {k>9?
+                            <div ref={messageRef} className={message !="CORRECT!!!"? "messagewrongCons":"messagecorrectCons"}>{message}</div>
                         : null}
                     </div>
 
                     <div className="lecture-footer">
-                        {this.state.k<9?
+                        {k<9?
                            <div><div className="pre-text">Letters like, c, q, v, x and z are not among Yoruba consonants.</div><h4 className="pronounce">*Click on Letter to hear pronunciation*</h4></div>
-                        :  this.state.k <10?
+                        :  k <10?
                             <h4 className="pronounce">*Next will be an assessment.*</h4>
                         : null}
                     </div>
 
                 </div>
 
-                {this.state.k <10?
+                {k <10?
                     <div className="btn-container">
-                    <button className="btn2" disabled={this.state.k<1? true: false} onClick={() => this.previnfo()}>
+                    <button className="btn2" disabled={k<1? true: false} onClick={() => previnfo()}>
                         <span id="spann">Previous</span>
                     </button>
 
-                    <button className="btn" onClick={() => this.newdata()}>
-                        <span id="spann">{this.state.text}</span>
+                    <button className="btn" onClick={() => newdata()}>
+                        <span id="spann">{text}</span>
                     </button>
                     </div>
-                :this.state.k<24?
-                <button className="test-btn" disabled={this.state.answered===null? true : false} onClick={() => this.newtestinfo()}>
+                :k<24?
+                <button className="test-btn" disabled={answered===null? true : false} onClick={() => newtestinfo()}>
                     <span id="spann">Next</span>
                 </button>
-                :<NavLink className="test-btn" to="/" className="test-btn" activeclassName="test-btn" exact="/" onClick={()=>this.medalScore()}>
+                :<NavLink className="test-btn" to="/" className="test-btn" activeclassName="test-btn" exact="/" onClick={()=>medalScore()}>
                 <span id="spann">Finish</span>
             </NavLink>}
             </div>
         )
-    }
 }
 export default Consonantslec;
