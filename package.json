@@ -10,7 +10,6 @@
     "@testing-library/user-event": "^12.8.3",
     "dotenv": "^4.0.0",
     "firebase": "^8.7.1",
-    "howler": "^2.2.2",
     "lottie": "^0.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
