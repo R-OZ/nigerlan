@@ -5,7 +5,7 @@ import Consonantslec from "./components/Consonantslec";
 import Numberslec from "./components/Numberslec";
 import Bodylec from "./components/Bodylec";
 import Grammarlec from "./components/Grammarlec";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import React, { Component } from "react";
 import Feedback from "./components/Feedback";
 import Login from "./components/Login";
@@ -69,7 +69,7 @@ class App extends React.Component {
   return (
     <div>
       
-      <BrowserRouter >
+      <HashRouter >
         <Route exact path="/">
          <Main music={this.playPause} newGold={this.state.gold} newSilver={this.state.silver} newBronze={this.state.bronze} image={this.state.imageID} imageChange={this.onChange} progy={this.state.progy}/>
         </Route>
@@ -114,7 +114,7 @@ class App extends React.Component {
           </Route>
         </Switch>
         
-      </BrowserRouter>
+      </HashRouter>
     </div>
   )
   }
