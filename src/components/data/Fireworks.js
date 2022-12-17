@@ -17,7 +17,7 @@ const Fireworks = () => {
         <Lottie 
           options={defaultOptions}
           height={300}
-          width={500}
+          // width={600}
         />
       </div>
     );

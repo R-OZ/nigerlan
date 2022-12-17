@@ -1,123 +1,154 @@
 import Main from "./components/Main";
-import Alphabetslec from "./components/Alphabetslec";
-import Vowelslec from "./components/Vowelslec";
-import Consonantslec from "./components/Consonantslec";
-import Numberslec from "./components/Numberslec";
-import Bodylec from "./components/Bodylec";
-import Grammarlec from "./components/Grammarlec";
+
+import Lecture from "./components/Lecture/Lecture";
+import GrammarLec from "./components/Lecture/Grammar/GrammarLec";
+import Loading from "./components/Loading";
+
 import { HashRouter, Route, Switch } from "react-router-dom";
-import React, { Component } from "react";
-import Feedback from "./components/Feedback";
-import Login from "./components/Login";
-import girl from "./components/images/girl.svg"
-import girl2 from "./components/images/girl2.svg"
-import girl3 from "./components/images/girl3.svg"
+import React, { useState, useEffect } from "react";
+import Feedback from "./components/Profile/Feedback";
+
 import boy from "./components/images/boy.svg"
-import boy2 from "./components/images/boy2.svg"
-import boy3 from "./components/images/boy3.svg"
-import backmusic from "./components/Sounds/backmusic.mp3"
+import speaker from "./components/images/speaker.png"
+import mute from "./components/images/mute.png"
+
+import backgroundMusic from "./components/Sounds/backmusic.mp3"
 
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      gold: 0,
-      silver: 0,
-      bronze: 0,
-      progy: 0,
-      imageID: boy,
-      audio: new Audio(backmusic),
-      isPlaying: false,
-    }
-}
-  playPause = () => {
-    let isPlaying = this.state.isPlaying;
-    this.state.audio.loop = true;
+const App = () => {
+  const [audio, setAudio] = useState(new Audio(backgroundMusic))
+  const [gold, setGold] = useState(0)
+  const [silver, setSilver] = useState(0)
+  const [bronze, setBronze] = useState(0)
+
+  const[showSet, setShowSet] = useState(false)
+  const[isToggle, setIsToggle] = useState(false)
+
+  const [ratingAlpha, setRatingAlpha] = useState(0.0)
+  const [ratingVowel, setRatingVowel] = useState(0.0)
+  const [ratingCons, setRatingCons] = useState(0.0)
+  const [ratingNum, setRatingNum] = useState(0.0)
+  const [ratingBody, setRatingBody] = useState(0.0)
+  const [ratingGram, setRatingGram] = useState(0.0)
+
+  const [username, setUsername] = useState("User1960")
+  const [progy, setProgy] = useState(0)
+  const [imageID, setImageID] = useState(boy)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [playingImage, setPlayingImage] = useState(mute)
+
+
+  useEffect(()=>{
+    setShowSet(!showSet)
+    setIsToggle(!false)
+  }, [])
+
+  const updateUsername = (e)=>{
+    setUsername(e)
+  }
+  const handleClick = () =>{
+    setShowSet(!showSet)
+  }
+  const toggle = () =>{
+    setIsToggle(!isToggle)
+  }
+
+  const playPause = () =>{
+    audio.loop = true;
 
     if (isPlaying) {
       // Pause the song if it is playing
-      this.state.audio.pause();
-    } else {
-
+      audio.pause();
+      setPlayingImage(mute)
+    } 
+    else {
       // Play the song if it is paused
-      this.state.audio.play();
+      audio.play();
+      setPlayingImage(speaker)
     }
 
     // Change the state of song
-    this.setState({ isPlaying: !isPlaying });
+    setIsPlaying(!isPlaying);
     };
 
-  onChange = (tuff) => {
-  this.setState({imageID: tuff})
+  const onChange = (newImg) => {
+    setImageID(newImg)
   }
 
-  handleData = (childData1, childData2, childData3) =>{
-    this.setState({gold: this.state.gold + childData1})
-    this.setState({silver: this.state.silver + childData2})
-    this.setState({bronze: this.state.bronze + childData3})
-}
-  updateProgy =(percy)=>{
-    if (this.state.progy<100){
-      this.setState({progy: this.state.progy + percy})
-    }
-    else{
-      null
+  
+
+  const starRating = (idx,rate) =>{
+    const ratingArray = [setRatingAlpha, setRatingVowel, setRatingCons, setRatingNum, setRatingBody, setRatingGram]
+    ratingArray[idx](rate)
+  }
+
+ 
+
+  const handleData = (childData1, childData2, childData3) =>{
+    setGold(gold + childData1)
+    setSilver(silver + childData2)
+    setBronze(bronze + childData3)
+  }
+
+  const updateProgy =(percent)=>{
+    if (progy<100){
+      setProgy(progy + percent)
     }
   }
-  render(){
+
   return (
-    <div>
-      
-      <HashRouter >
-        <Route exact path="/">
-         <Main music={this.playPause} newGold={this.state.gold} newSilver={this.state.silver} newBronze={this.state.bronze} image={this.state.imageID} imageChange={this.onChange} progy={this.state.progy}/>
-        </Route>
-        <Switch>
-          <Route path="/Login">
-            <Login />
+    <HashRouter>
+      <Switch>
+          <Route exact path="/">
+              <Main 
+                music={playPause} 
+                musicImage = {playingImage}
+                username = {username}
+                updateUsername = {updateUsername}
+                newGold={gold} 
+                newSilver={silver} 
+                newBronze={bronze} 
+                image={imageID} 
+                imageChange={onChange} 
+                progy={progy}
+                showSet = {showSet}
+                isToggle = {isToggle}
+                toggle ={toggle}
+                handleClick ={handleClick}
+                ratings = {[ratingAlpha, ratingVowel, ratingCons, ratingNum, ratingBody, ratingGram]}
+              />
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Alphabetslec">
-            <Alphabetslec progy={this.updateProgy}/>
+              <Lecture id="alphabet" progy={updateProgy} setRating={starRating}/>
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Vowelslec">
-            <Vowelslec calcGold={this.handleData} progy={this.updateProgy} />
+              <Lecture id="vowel" medalUpdate={handleData} progy={updateProgy} setRating={starRating}/>
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Consonantslec">
-            <Consonantslec calcGold={this.handleData} progy={this.updateProgy}/>
+              <Lecture id="consonant" medalUpdate={handleData} progy={updateProgy} setRating={starRating} />
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Numberslec">
-            <Numberslec calcGold={this.handleData} progy={this.updateProgy}/>
+              <Lecture id="number" medalUpdate={handleData} progy={updateProgy} setRating={starRating}/>
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Bodylec">
-            <Bodylec calcGold={this.handleData} progy={this.updateProgy}/>
+              <Lecture id="body" medalUpdate={handleData} progy={updateProgy} setRating={starRating}/>
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Grammarlec" >
-            <Grammarlec progy={this.updateProgy}/>
+              <GrammarLec progy={updateProgy} setRating={starRating} />
           </Route>
-        </Switch>
-        <Switch>
           <Route path="/Feedback">
-            <Feedback />
+              <Feedback />
           </Route>
-        </Switch>
-        
-      </HashRouter>
-    </div>
+          <Route path="/Loading"> {/*This Component is not yet in use*/}
+            {/*Will be in use for asynchronous requests to the backend */}
+            {/* To see view this component, simply type "/loading" after the home page and enter */}
+            <Loading/>
+          </Route>
+      </Switch>
+    </HashRouter>
   )
-  }
 }
 
+fiun
 export default App;
+

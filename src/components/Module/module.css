@@ -1,0 +1,53 @@
+.module{
+    /* width:1; */
+    /* height:180px; */
+    border-radius: 20px;
+    box-shadow:0 5px 6px 0 rgba(0,0,0,.24),0 12px 50px 0 rgba(0,0,0,.19);
+    transition: 0.1s ease-in-out;
+}
+
+.module:hover{
+    transform: translate(-2%,-2%);
+    box-shadow:0 10px 11px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+
+.module-title-container{
+    /*no need for anything here*/
+    width: inherit;
+}
+#module-img{
+    width:35px;
+    height: auto;
+}
+#module-title{
+    display: inline;
+    margin-left: 10px;
+    font-size: 25px; 
+  
+}
+.module-content{
+    margin-top: 10px;
+    padding: 0 12%;
+    font-size: 20px;
+    /* background-color: white; */
+}
+#module-text{
+    font-size: 17px;
+    font-weight: 400;
+    font-family: 'Baloo 2', cursive;
+    line-height: 1.2;
+}
+#module-line{
+    height: 2px;
+    border-radius: 50%;
+    background-color: rgb(201, 201, 201);
+    width: 80%;
+    margin: 10px auto;
+}
+.module-rating-container{
+    display: flex;
+    justify-content: center;
+    /* background-color: black; */
+    margin-bottom: 10px;
+    z-index: -1;
+}

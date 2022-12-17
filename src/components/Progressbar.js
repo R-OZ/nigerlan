@@ -2,17 +2,19 @@ import React from "react";
 
 const Progressbar = (props) => {
     const {bgcolor, completed} = props;
+    let cc = completed
+    if (cc>100){cc=100}
 
     const containerStyles={
-        height: 20,
-        width: '90%',
+        height: 18,
+        width: '100%',
         backgroundColor: "#e0e0de",
         borderRadius: 50,
         marginTop: 6
     }
     const fillerStyles={
         height: '100%',
-        width: `${completed}%`,
+        width: `${cc}%`,
         backgroundColor: bgcolor,
         borderRadius: 'inherit',
         transition: 'width 1s ease-in-out',
@@ -21,7 +23,7 @@ const Progressbar = (props) => {
         
     }
     const labelStyles={
-        paddingl: 5,
+        padding: 8,
         color: 'white',
         fontWeight: 'bold'
     }
@@ -29,7 +31,7 @@ const Progressbar = (props) => {
     return (
         <div style={containerStyles}>
             <div style={fillerStyles}>
-                <span style={labelStyles}>{`${completed}%`}</span>
+                <span style={labelStyles}>{`${cc}%`}</span>
             </div>
         </div>
     )

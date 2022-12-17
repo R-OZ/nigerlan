@@ -1,0 +1,324 @@
+@media (min-width:280px) {
+    
+.profile-container{
+    background-color: rgb(10, 163, 10);
+    box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 260px ;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 50px 20px;
+    position: fixed;
+    top:45px;
+    left:-100%;
+    z-index: 2;
+    transition: 0.5s;
+}
+
+.-move{
+    left: 0;
+}
+.profile-header{
+    width: inherit;
+}
+#profile-img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgb(248, 244, 244);
+    display: none;
+}
+#profile-name{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.profile-progress{
+    margin-top: 6%;
+    margin-bottom: 6%;
+}
+.profile-text{
+    font-size: 18px;
+    font-weight: 500;
+}
+.profile-hr{
+    background-color: rgb(11, 191, 11);
+    width: 100%;
+    height: 2px;
+    margin:3% auto;
+    border-radius: 50%;
+}
+
+.profile-medals{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: rgb(43, 43, 43);
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+}
+.profile-medal-container1{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4%;
+}
+.medal-img{
+    width: 43px;
+    height: auto;
+}
+.profile-medal-container2{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 4%;
+}
+.profile-buttons{
+    width: 100%;
+    margin-top: 3%;
+}
+
+.profile-button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    /* background-color: #1d0df9; */
+    width: 100%;
+    padding: 14px 0;
+}
+
+.profile-button:hover{
+background-color: #53a72d;
+}
+
+.profile-button-img{
+    width: 25px;
+    height: 25px;
+    margin-right: 3%;
+}
+.profile-button-txt{
+    font-size: 19px;
+    font-weight: 500;
+}
+.profile-footer{
+    position: absolute;
+    bottom:0;
+    left:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    /* border-bottom-left-radius:20px;*/
+    border-bottom-right-radius:20px; 
+    width: 100%;
+    /* height: 8%; */
+    padding: 10px 0;
+    background-color: rgb(13, 139, 13);
+    font-size: 14px;
+    font-weight: 100;
+    font-style: italic;
+    cursor: pointer;
+}
+.profile-footer:hover{
+    background-color:  rgb(16, 127, 16);
+}
+#profile-footer-txt{
+    font-size: 10px;
+    /* font-style:normal; */
+}
+.avatar-label{
+    /* background-color: red; */
+    position: relative;
+    user-select: none;
+}
+
+.avatar-label input:checked ~.avatar-img{
+    border: 3px solid #dbad39;
+    border-radius: 10px;
+    padding: 3px;
+    transition: .2s ease;
+}
+.avatar-label>input{
+    position: absolute;
+    visibility: hidden;
+}
+
+.settings-submit{
+    background-color: #dbad39;
+    width: fit-content;
+    margin: auto;
+    padding: 7px 25px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    user-select: none;
+}
+.settings-submit:hover{
+    background-color: #efc14e;
+}
+
+
+
+/* Below is the css for the settings form */
+
+.settings-container{
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0%;
+    color: white;
+    left: 0%;
+    height: 100vh;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.settings-container2{
+    background-color: none;
+}
+#cancel-settings{
+    width: 25px;
+    cursor: pointer;
+    height: 25px;
+    margin-bottom: 10px;
+}
+.settings-form{
+    background-color: white;
+    border-radius: 20px;
+    width: min(90vw,330px);
+}
+.settings-header{
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
+    color: grey;
+    font-size: 30px;
+}
+.settings-body{
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem 2rem 2rem;
+    /* background-color: red; */
+}
+.settings-body-head{
+    font-family: 'Varela Round', sans-serif; 
+    font-size: 20px;
+    color: rgb(26, 25, 25);
+}
+.settings-username{
+    /* background-color: red; */
+    padding: 2px;
+    font-family: 'Baloo 2', cursive;
+    color: grey;
+    font-size: 18px;
+    border: 2px solid rgb(72, 72, 72);
+    border-radius: 10px;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding: 2px 10px;
+    max-width: 300px;
+}
+.settings-username:focus{
+    border: none;
+    border: 2px solid black;
+}
+.avatar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 20px 0;
+    /* background-color: red; */
+}
+.avatar-contain{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+.avatar-img{
+    width: 65px;
+    height: 65px;
+    cursor: pointer;
+}
+.settings-footer{
+    color: black;
+    font-family: 'Varela Round', sans-serif; 
+}
+#footer-image{
+    width: 18px;
+    height: 18px;
+    display: inline;
+}
+}
+@media(min-width:600px){
+    .settings-form{
+        width: 500px;
+    }
+    #cancel-settings{
+        width: 35px;
+        height: 35px;
+    }
+    .avatar-container{
+        gap: 40px;
+    }
+    .avatar-contain{
+        width: 85%;
+    }
+    .avatar-img{
+        width: 75px;
+        height: 75px;
+    }
+
+}
+@media(min-width:800px){
+    .settings-form{
+        width: 600px;
+    }
+    #cancel-settings{
+        width: 40px;
+        height: 40px;
+    }
+    .avatar-container{
+        gap: 45px;
+    }
+    .avatar-contain{
+        width: 85%;
+    }
+    .avatar-img{
+        width: 90px;
+        height: 90px;
+    }
+    .settings-header{
+        font-size: 35px;
+    }
+    .settings-body-head{
+        font-size: 25px;
+    }
+    .settings-footer{
+        font-size: 18px;
+    }
+
+}
+@media (min-width: 1000px) {
+    .profile-container{
+        position:relative;
+        left:0;
+        top:0;
+        border-radius: 20px ;
+
+    }
+    .profile-footer{
+        border-bottom-left-radius: 20px;
+    }
+    #profile-img{
+        display: block;
+    }
+    .settings-container2{
+        display: flex;
+        gap: 10px
+    }
+
+    
+}

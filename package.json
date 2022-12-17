@@ -1,10 +1,13 @@
 {
-  "homepage": "http://R-OZ.github.io/nigerlan",
+  "homepage": "http://R-OZ.github.io/nigerlan2",
   "name": "react-task-tracker",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@google-cloud/translate": "^6.2.2",
+    "@mui/material": "^5.10.8",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

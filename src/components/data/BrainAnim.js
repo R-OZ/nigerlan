@@ -16,8 +16,6 @@ const BrainAnim = () => {
       <div>
         <Lottie 
           options={defaultOptions}
-          height={300}
-          width={300}
         />
       </div>
     );

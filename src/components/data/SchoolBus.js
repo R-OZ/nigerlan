@@ -16,8 +16,8 @@ const SchoolBus = () => {
       <div>
         <Lottie 
           options={defaultOptions}
-          height={300}
-          width={300}
+          // height={330}
+          // width={330}
         />
       </div>
     );
