@@ -148,7 +148,5 @@ const App = () => {
     </HashRouter>
   )
 }
-
-fiun
 export default App;
 
