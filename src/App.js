@@ -2,7 +2,7 @@ import Main from "./components/Main";
 
 import Lecture from "./components/Lecture/Lecture";
 import GrammarLec from "./components/Lecture/Grammar/GrammarLec";
-import Loading from "./components/Loading";
+import Loading from "./components/Loading/Loading";
 
 import { HashRouter, Route, Switch } from "react-router-dom";
 import React, { useState, useEffect } from "react";

@@ -27,7 +27,7 @@
   width: 100%;
   padding: 0 20px;
   display:flex;
-  background-image: url("./components/images/689.jpg");
+  background-image: url("./components/images/backgroundImage.jpg");
   background-color: rgba(0, 0, 0, 0.4);
   background-size:cover;
   background-position: center;

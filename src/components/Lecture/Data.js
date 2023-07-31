@@ -143,93 +143,91 @@ import mouthsound from "../Sounds/BodyPro/mouth.mp3"
 import backsound from "../Sounds/BodyPro/back.mp3"
 
 
-
-
 export const data = {
     alphabet:{
       lecTxt: "There are twenty five (25) alphabets in Yoruba language. These are:",
       lecBody: [
       [
-      {
-        capital: "A",
-        small: "a",
-        pronounce:"ahh",
-        sound: new Audio(a)
-      },
-      {
-          capital:"B",
-          small:"b",
-          pronounce:"bee",
-          sound: new Audio(b)
-      },
-      {
-          capital:"D",
-          small:"d",
-          pronounce:"dee",
-          sound: new Audio(d)
-          
-      },
-      {
-          capital:"E",
-          small:"e",
-          pronounce:"hay",
-          sound: new Audio(e)
-      },  
-      {
-          capital:"Ẹ",
-          small: "ẹ",
-          pronounce:"eh",
-          sound: new Audio(e2)
-      },
-      {
-          id:6,
-          capital:"F",
-          small:"f",
-          pronounce:"fee",
-          sound: new Audio(f)
-      },
-      {
-          capital:"G",
-          small:"g",
-          pronounce:"gee",
-          sound: new Audio(g)
-      },
-      {
-          capital:"Gb",
-          small:"gb",
-          pronounce:"gbh",
-          sound: new Audio(gb)
-      },
-      {
-          capital: "H",
-          small:"h",
-          pronounce:"hee",
-          sound: new Audio(h)
-      },
-      {
-          capital: "I",
-          small:"i",
-          pronounce:"ee",
-          sound: new Audio(i)
-      },
-      {
-          capital: "J",
-          small:"j",
-          pronounce:"jee",
-          sound: new Audio(j)
-      },
-      {
-          capital:"K",
-          small:"k",
-          pronounce:"key",
-          sound: new Audio(k)
-      },
-      {
-          capital:"L",
-          small:"l",
-          pronounce:"lee",
-          sound: new Audio(l)
-      }
+        {
+            capital: "A",
+            small: "a",
+            pronounce:"ahh",
+            sound: new Audio(a)
+        },
+        {
+            capital:"B",
+            small:"b",
+            pronounce:"bee",
+            sound: new Audio(b)
+        },
+        {
+            capital:"D",
+            small:"d",
+            pronounce:"dee",
+            sound: new Audio(d)
+            
+        },
+        {
+            capital:"E",
+            small:"e",
+            pronounce:"hay",
+            sound: new Audio(e)
+        },  
+        {
+            capital:"Ẹ",
+            small: "ẹ",
+            pronounce:"eh",
+            sound: new Audio(e2)
+        },
+        {
+            id:6,
+            capital:"F",
+            small:"f",
+            pronounce:"fee",
+            sound: new Audio(f)
+        },
+        {
+            capital:"G",
+            small:"g",
+            pronounce:"gee",
+            sound: new Audio(g)
+        },
+        {
+            capital:"Gb",
+            small:"gb",
+            pronounce:"gbh",
+            sound: new Audio(gb)
+        },
+        {
+            capital: "H",
+            small:"h",
+            pronounce:"hee",
+            sound: new Audio(h)
+        },
+        {
+            capital: "I",
+            small:"i",
+            pronounce:"ee",
+            sound: new Audio(i)
+        },
+        {
+            capital: "J",
+            small:"j",
+            pronounce:"jee",
+            sound: new Audio(j)
+        },
+        {
+            capital:"K",
+            small:"k",
+            pronounce:"key",
+            sound: new Audio(k)
+        },
+        {
+            capital:"L",
+            small:"l",
+            pronounce:"lee",
+            sound: new Audio(l)
+        }
       ],
       [
         {
@@ -305,7 +303,7 @@ export const data = {
             sound: new Audio(y)
         }
       ]
-  ],
+    ],
       isTest: false,
       progyColor: "#EE2929",
       test1:[],
