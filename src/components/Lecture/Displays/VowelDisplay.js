@@ -1,7 +1,7 @@
 import React from 'react'
 
 const VowelDisplay = ({ capital, pronounce, image, example, example2, sound }) => {
-    if (pronounce != "ooh") {
+    if (pronounce !== "ooh") {
         return (
             <div className="vowel-content">
                 <div className="vowel-text" onClick={() => sound.play()}>
@@ -16,7 +16,7 @@ const VowelDisplay = ({ capital, pronounce, image, example, example2, sound }) =
             </div>
         )
     }
-    if (pronounce == "ooh") {
+    if (pronounce === "ooh") {
         return (
             <div className="vowel-content">
   

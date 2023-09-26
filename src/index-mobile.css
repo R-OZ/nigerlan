@@ -1508,15 +1508,22 @@ iframe{
 }
 .num-images{
   z-index: 3;
-
   display: flex;
   flex-direction: column;
   overflow: auto;
-  background-color: red;
+  background-color: yellow;
   width: 60%;
+
  
 }
+.myIframe{
+  min-height: 100vh;
 
+}
+iframe{
+  width: 100% !important;
+  max-height: 100vh;
+}
 
 .login-container{
   width: 100%;

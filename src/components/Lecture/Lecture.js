@@ -1,82 +1,105 @@
 import React, {useState, useEffect}from 'react'
 import { Link } from 'react-router-dom'
-import { data } from './Data'
+import Header from './Header'
+import Button from './Button/Button'
+import Loading from '../Loading/Loading'
 
-import AlphaDisplay from './Displays/AlphaDisplay'
-import VowelDisplay from './Displays/VowelDisplay'
-import ConsDisplay from './Displays/ConsDisplay'
-import NumBodDisplay from './Displays/NumBodDisplay'
-import NumExtra from './Displays/NumExtra'
+import numbersFullList from '../data/numbers.pdf'
 
 import Progressbar from '../Progressbar'
-import EndLecture from './EndLecture'
-import EndTest from './EndTest'
 
 import cancel from "../images/cancel.svg"
 import buttonsound from "../Sounds/buttonsound.mp3"
 import wrong from "../Sounds/wrong.mp3"
 import correct from "../Sounds/correct.mp3"
 import BoyWave from '../data/BoyWave'
-import info from '../images/info.svg'
-import pdf1 from "../images/numbers/pdf1.jpg"
-import pdf2 from "../images/numbers/pdf2.jpg"
-import pdf3 from "../images/numbers/pdf3.jpg"
-import pdf4 from "../images/numbers/pdf4.jpg"
-import pdf5 from "../images/numbers/pdf5.jpg"
+import Body from './Body'
+import Footer from './Footer'
+
+import { useGlobalState, ACTIONS } from '../../Context'
 
 
 
-const Lecture = ({id, medalUpdate, progy, setRating}) => {
+const Lecture = ({id}) => {
+
+  const {dispatch} = useGlobalState();
 
   const buttonSound = new Audio(buttonsound)
   const correctSound = new Audio(correct)
   const wrongSound = new Audio(wrong)
+
+  const [base, setBase] = useState({})
+
+  const [bodyCount, setBodyCount] = useState()
+  const [test1Count, setTest1Count] = useState()
+  const [test2Count, setTest2Count] = useState()
   
-  const bodyCount = data[id].lecBody.length
-    
-  const  test1Count = data[id].test1.length
-  const  test2Count = data[id].test2.length
+  const [prog, setProg] = useState(10)
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [TotalCount, setTotalCount] = useState(0)
+  const [correctCount, setCorrectCount] = useState(0)
+  const [message, setMessage] = useState(null)
+  const [answered, setAnswered] = useState(null)
+  const [isToggleCorrect, setIsToggleCorrect] = useState(false)
+  const [isToggleWrong, setIsToggleWrong] = useState(false)
+  const [test1ID, setTest1ID] = useState(0)
+  const [isCaptionLarge, setIsCaptionLarge] = useState(false)
+  const [isPdf, setIsPdf] =useState(false)
+  
+
+  useEffect(()=>{
+    setIsLoading(true);
+    fetch(`http://localhost:4000/lecture/${id}`)
+    .then((res)=> res.json())
+    .then((resData)=>{
+      console.log(resData);
+      setBase(resData);
+      setBodyCount(resData.lecBody.length);
+      setTest1Count(resData.test1.length);
+      setTest2Count(resData.test2.length)
+    })
+    .catch((err)=>{
+      setErrorMessage(err.message)
+      console.error(err.message)
+    })
+    .finally(()=> setIsLoading(false))
+  },[])
+
 
   const currProgy = Math.round(90/(bodyCount+test1Count+test2Count));
 
-  
-  const[prog, setProg] = useState(10)
-  const [TotalCount, setTotalCount] = useState(0)
-  const[correctCount, setCorrectCount] = useState(0)
-  const[message, setMessage] = useState(null)
-  const[answered, setAnswered] = useState(null)
-  const[isToggleCorrect, setIsToggleCorrect] = useState(false)
-  const[isToggleWrong, setIsToggleWrong] = useState(false)
-  const[test1ID, setTest1ID] = useState(0)
 
-  const[isCaptionLarge, setIsCaptionLarge] = useState(false)
-  const[isPdf, setIsPdf] =useState(false)
-  const showPdf=()=>{
+  const togglePDF=()=>{
     setIsPdf(!isPdf)
   }
 
-  const rater = ()=>{
-    //Algorithm to set a star rating after the user has finished the tests
-    let total = test1Count+test2Count
-    let userScore = correctCount
-    const res = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
-    const idx = {"alphabet":0,"vowel":1,"consonant":2,"number":3, "body": 4}
-    var starScore = (userScore/total) * 5.0
-    starScore = starScore.toFixed(2)
+  const PdfNumbers = ()=>{
+    return (
+      <div  className={!isPdf? "new-num":  "new-num display"}>
+          <img onClick={togglePDF} alt='cancel' className="num-cancel" src={cancel} />
+          <div className="num-images">
+              <iframe
+                src={numbersFullList}
+                width="100%"
+                title="PDF Viewer"
+                className='myIframe'
+              ></iframe>
+          </div>
+      </div>
+    )
+  }
 
-    var userStarRate = 0
-    var minDiff = 1
-
-    for (let i=0; i<res.length; i++){
-      var curr = Math.abs(starScore-res[i])
-      if(minDiff> curr){
-        minDiff=curr
-        userStarRate = res[i]
+  const starRating =()=>{
+    let starScore = ( (correctCount/(test1Count+test2Count) ) * 5.0).toFixed(1)
+    const roundedStarScore = Math.round(starScore * 2) / 2;
+    dispatch({
+      type: ACTIONS.STAR_RATING, 
+      payload: {
+        starRating: isNaN(roundedStarScore)? 5.0:roundedStarScore, 
+        id: id
       }
-    }
-
-    if(data[id].isTest){setRating(idx[id], userStarRate)}
-    else{setRating(idx[id], 5.0)}
+    })
   }
 
   useEffect(()=>{
@@ -90,27 +113,24 @@ const Lecture = ({id, medalUpdate, progy, setRating}) => {
     let g = Math.round(0.8*total);//80% and above - gold
     let userScore = correctCount
     if (userScore>=b){
-        {
-          userScore < s ?
-              medalUpdate(0,0,1)
-          : userScore < g ?
-              medalUpdate(0,1,0)
-          :  medalUpdate(1,0,0)
-        }
+      userScore < s ?
+          dispatch({type: ACTIONS.UPDATE_BRONZE})
+      : userScore < g ?
+          dispatch({type: ACTIONS.UPDATE_SILVER})
+      :  dispatch({type: ACTIONS.UPDATE_GOLD})
     }
-    else{medalUpdate(0,0,0)}
-    cumProgy()    
+    dispatch({type: ACTIONS.SET_PROGRESS, payload:{id: id}})    
   }
   
   const nextInfo = () =>{
     setTotalCount(TotalCount +1)
     buttonSound.play();
     setProg(prog+currProgy)
-    if(!data[id].isTest && TotalCount ==bodyCount){
-      cumProgy()
-      rater()
+    if(!base.isTest && TotalCount ===bodyCount){
+      dispatch({type: ACTIONS.SET_PROGRESS, payload:{id: id}})    
+      starRating()
     }
-    if(data[id].isTest && TotalCount>bodyCount){
+    if(base.isTest && TotalCount>bodyCount){
       setAnswered(null)
       setTest1ID(test1ID+1)
       if(message==="CORRECT!!!"){
@@ -123,7 +143,7 @@ const Lecture = ({id, medalUpdate, progy, setRating}) => {
 
       if(TotalCount===bodyCount+test1Count+test2Count){
         medalScore()
-        rater()
+        starRating()
       }
 
     }
@@ -134,9 +154,6 @@ const Lecture = ({id, medalUpdate, progy, setRating}) => {
     setProg(prog-currProgy)
   }
 
-  const cumProgy=()=>{
-    progy(17)
-  }
 
 
 
@@ -214,235 +231,88 @@ const Lecture = ({id, medalUpdate, progy, setRating}) => {
     if((id==="number" || id==="body") && x===1){
       return(
         <div className="numtest-container">
-                <div className="num-quest-container">
-                    <button className="num-quest" disabled={answered !== null? true: false}>{id==="number"? sound : <img src={sound} className="bod-img -test-img" />}</button>
-                </div>        
-                    
-                <div className="numobj-container">
-                    <button className="numobj" disabled={answered !== null? true: false} onClick={()=>handleAnswer(arr[0])}>{arr[0]}</button>
-                    
-                    <button className="numobj" disabled={answered!== null? true: false} onClick={()=>handleAnswer(arr[1])}>{arr[1]}</button>
-        
-                    <button className="numobj" disabled={answered!== null? true: false} onClick={()=>handleAnswer(arr[2])}>{arr[2]}</button>
-                </div>
-            </div>
+          <div className="num-quest-container">
+              <button className="num-quest" disabled={answered !== null? true: false}>{id==="number"? sound : <img src={sound} alt='' className="bod-img -test-img" />}</button>
+          </div>        
+              
+          <div className="numobj-container">
+              <button className="numobj" disabled={answered !== null? true: false} onClick={()=>handleAnswer(arr[0])}>{arr[0]}</button>
+              
+              <button className="numobj" disabled={answered!== null? true: false} onClick={()=>handleAnswer(arr[1])}>{arr[1]}</button>
+  
+              <button className="numobj" disabled={answered!== null? true: false} onClick={()=>handleAnswer(arr[2])}>{arr[2]}</button>
+          </div>
+      </div>
       )
     }
 }
 
   return (
     <div className="lecture-section">
-        <div className="lecture-container">
-          
-          <div className="lecture-prog-cancel">
-            <Link to="/" exact><img id='lecture-cancel' src={cancel} /></Link>
-            <Progressbar bgcolor={data[id].progyColor} completed={prog} />
-          </div>
-
-          <div className="lecture-content">
-            <p id="lecture-text">
-              {(bodyCount-TotalCount===2 || bodyCount-TotalCount===1) && id==="number" ?
-                data[id].lecTxt3
-              : TotalCount>4 && TotalCount<bodyCount && id==="number"?
-                data[id].lecTxt2
-              :TotalCount<bodyCount?
-                data[id].lecTxt
-              : TotalCount===bodyCount?
-                  null
-              : TotalCount <= bodyCount  + test1Count?
-                  data[id].test1Text
-              : TotalCount <= bodyCount  + test1Count +test2Count?
-                  data[id].test2Text
-              :
-                null
-              }
-            </p>
-            
-            <div className="lecture-body">
-                {TotalCount===0 &&id==="alphabet"?
-                  <div className={id==="alphabet"? "table-alpha-container" : "table-alpha-container -null"}>
-                    {data[id].lecBody[TotalCount].map((obj)=>{
-                      return <AlphaDisplay capital={obj.capital} small={obj.small} pronounce={obj.pronounce} sound={obj.sound} />
-                      })}
-                  </div>
-                : TotalCount===1 && id==="alphabet"?
-                  <div className={id==="alphabet"? "table-alpha-container" : "table-alpha-container -null"}>
-                    {data[id].lecBody[TotalCount].map((obj)=>{
-                      return <AlphaDisplay capital={obj.capital} small={obj.small} pronounce={obj.pronounce} sound={obj.sound} />
-                      })}
-                  </div>
-                : null }
-              
-              {TotalCount ===bodyCount?<EndLecture/>:null}
-               
-              {TotalCount< bodyCount && id==="vowel"?
-                <VowelDisplay 
-                  capital={data[id].lecBody[TotalCount].capital} 
-                  pronounce={data[id].lecBody[TotalCount].pronounce} 
-                  image={data[id].lecBody[TotalCount].image} 
-                  example={data[id].lecBody[TotalCount].example} 
-                  example2={data[id].lecBody[TotalCount].example2} 
-                  sound={data[id].lecBody[TotalCount].sound} 
-                />
-              :TotalCount === bodyCount && id==="vowel" ? 
-                  null
-              : TotalCount <=bodyCount +test1Count && id==="vowel"?
-                  TestChecker(data[id].test1[test1ID].question, data[id].answers, 1)
-              : TotalCount <=bodyCount +test1Count+test2Count && id==="vowel"?
-                  TestChecker(data[id].test2[test1ID].question,["Ẹ","O","U"],2, data[id].test2[test1ID].sound )
-              : null
-              }
-
-              {TotalCount< bodyCount && id==="consonant"?
-                <ConsDisplay 
-                  capital={data[id].lecBody[TotalCount].capital} 
-                  pronounce={data[id].lecBody[TotalCount].pronounce} 
-                  image={data[id].lecBody[TotalCount].image}
-                  capital2={data[id].lecBody[TotalCount].capital2}
-                  pronounce2={data[id].lecBody[TotalCount].pronounce2}
-                  image2={data[id].lecBody[TotalCount].image2}
-                  example={data[id].lecBody[TotalCount].example} 
-                  example2={data[id].lecBody[TotalCount].example2} 
-                  examplem={data[id].lecBody[TotalCount].examplem}
-                  examplem2={data[id].lecBody[TotalCount].examplem2}
-                  sound1={data[id].lecBody[TotalCount].sound1}
-                  sound2={data[id].lecBody[TotalCount].sound2} 
-                />
-              :TotalCount === bodyCount && id==="consonant" ? 
-                  null
-              : TotalCount <=bodyCount +test1Count && id==="consonant"?
-                  TestChecker(data[id].test1[test1ID].question, data[id].answers, 1)
-              : TotalCount <=bodyCount +test1Count+test2Count && id==="consonant"?
-                  TestChecker(data[id].test2[test1ID].question,["P","W","J","K","R","T"],2, data[id].test2[test1ID].sound )
-              : null
-              }
-
-              {TotalCount< bodyCount && id==="number"?
-                <NumBodDisplay
-                  num1 = {data[id].lecBody[TotalCount].num1}
-                  num2 = {data[id].lecBody[TotalCount].num2}
-                  numname1 = {data[id].lecBody[TotalCount].numname1}
-                  numname2 = {data[id].lecBody[TotalCount].numname2}
-                  numtext1 = {data[id].lecBody[TotalCount].numtext1 }
-                  numtext2 = {data[id].lecBody[TotalCount].numtext2}
-                  sound1 = {data[id].lecBody[TotalCount].sound1}
-                  sound2 = {data[id].lecBody[TotalCount].sound2}
-                />
-              :TotalCount === bodyCount && id==="number" ? 
-                  null
-              : TotalCount <=bodyCount +test1Count && id==="number"?
-                  TestChecker(data[id].test1[test1ID].question, data[id].answers, 1, data[id].test1[test1ID].display)
-              : TotalCount <=bodyCount +test1Count+test2Count && id==="number"?
-                  TestChecker(data[id].test2[test1ID].question, data[id].answers, 2, data[id].test2[test1ID].sound )
-              : null
-              }
-
-              {bodyCount-TotalCount===2 && id==="number" ? 
-                <NumExtra type="addition"/>
-              :bodyCount-TotalCount===1 && id==="number" ?
-                <NumExtra type="subtraction" />
-              :null
-              }
-
-
-              {TotalCount< bodyCount && id==="body"?
-                <NumBodDisplay
-                  numtext1 = {data[id].lecBody[TotalCount].yor1}
-                  num1 = {data[id].lecBody[TotalCount].eng1}
-                  numtext2 = {data[id].lecBody[TotalCount].yor2}
-                  num2 = {data[id].lecBody[TotalCount].eng2}
-                  sound1 = {data[id].lecBody[TotalCount].sound1}
-                  sound2 = {data[id].lecBody[TotalCount].sound2}
-                  image1 = {data[id].lecBody[TotalCount].image1}
-                  image2 = {data[id].lecBody[TotalCount].image2}
-                />
-              :TotalCount === bodyCount && id==="body" ? 
-                  null
-              : TotalCount <=bodyCount +test1Count && id==="body"?
-                  TestChecker(data[id].test1[test1ID].question, data[id].answers, 1, data[id].test1[test1ID].display)
-              : TotalCount <=bodyCount +test1Count+test2Count && id==="body"?
-                  TestChecker(data[id].test2[test1ID].question, data[id].answers, 2, data[id].test2[test1ID].sound )
-              : null
-              }
-
-              {TotalCount> bodyCount+test1Count+test2Count?
-                <EndTest count={correctCount} total={test1Count+test2Count} />
-              : null}
-              
-
-            </div>
-
-
-
-            {TotalCount < bodyCount?
-              <div className= {!isCaptionLarge? "lecture-caption -scale-caption": "lecture-caption"}>
-                {TotalCount < bodyCount && id!=="number"?
-                  <span>*Click on the icon or image to hear pronunciation* {id=="alphabet"? <span id="spanner"><br />*Scroll down to see more*</span>: null}</span>
-                : bodyCount -TotalCount>2 && id === "number"?
-                  <span>*Click on the icon or image to hear pronunciation*</span>
-                : bodyCount -TotalCount ===2 || bodyCount-TotalCount===1 && id === "number"?
-                  <div className='num-footer'>
-                  <img onClick={showPdf} src={info} alt="" id="num-info" />
-                  <span id="num-footer-txt">*Click on info icon for further information*</span>
-                  </div>
-                : null}
-              </div>
-            :TotalCount === bodyCount && data[id].isTest ?
-            <div className= {!isCaptionLarge? "lecture-caption -scale-caption": "lecture-caption"}>
-              <span>*Next will be an assessment*</span>
-            </div>
-            : null }
-          
-          </div>
-          
-          <div  className={!isPdf? "new-num":  "new-num display"}>
-              <img onClick={showPdf} className="num-cancel" src={cancel} />
-              <div className="num-images">
-                  <img src={pdf1} className="num-image" />
-                  <img src={pdf2} className="num-image" />
-                  <img src={pdf3} className="num-image" />
-                  <img src={pdf4} className="num-image" />
-                  <img src={pdf5} className="num-image" />
-              </div>
-          </div>
-
-
-
-
-          {!data[id].isTest?
-            <div className="lecture-btn-container">
-                <button className="btn2" onClick={prevInfo}>
-                  <span id="spann">Previous</span>
-                </button>
-                      
-                <Link to={TotalCount=== bodyCount? "/": null} exact className="btn" onClick={nextInfo}>
-                    <span id="spann">{TotalCount<bodyCount? "Next Slide": "Finish"}</span>
-                </Link>
-            </div>
-          : TotalCount <= bodyCount?
-            <div className="lecture-btn-container">
-              <button className="btn2" onClick={prevInfo}>
-                <span id="spann">Previous</span>
-              </button>
-                  
-              <button className="btn" onClick={nextInfo}>
-                  <span id="spann">{TotalCount<bodyCount? "Next Slide": "Finish"}</span>
-              </button>
-            </div>
+      {
+        isLoading ?
+          <Loading />
+        :
+          errorMessage ?
+            <h1 style={{color: 'red', margin:'auto'}}>{errorMessage}</h1>
           :
-          <Link to={TotalCount> bodyCount+test1Count+test2Count? "/" : null} exact>
-          <div className="lecture-btn-container">
-              <button className="test-btn" disabled={answered === null ? true : false} onClick={nextInfo} >
-                <div className="spannn"><span id="spann">{TotalCount >bodyCount+test1Count+test2Count? "Finish": "Next"}</span></div>
-                <div className={!isToggleCorrect? "test-response": "test-response -correct"}><span id="test-ans">{message}</span></div>
-                <div className={!isToggleWrong? "test-response": "test-response -wrong"}><span id="test-ans">{message}</span></div>
-              </button>
-          </div>
-          </Link>
-          }
-          
-            
-        </div>
+            <div className="lecture-container">
+              
+              <div className="lecture-prog-cancel">
+                <Link to="/" exact><img id='lecture-cancel' alt='' src={cancel} /></Link>
+                <Progressbar bgcolor={base.progyColor} completed={prog} />
+              </div>
+
+              <div className="lecture-content">
+                <Header
+                  bodyCount={bodyCount}
+                  totalCount={TotalCount}
+                  lectureID={id}
+                  data={base}
+                  test1Count={test1Count}
+                  test2Count={test2Count}
+                />
+
+                <Body
+                  data={base}
+                  lectureID={id}
+                  totalCount={TotalCount}
+                  bodyCount={bodyCount}
+                  test1Count={test1Count}
+                  test2Count={test2Count}
+                  test1ID={test1ID} 
+                  correctCount={correctCount}
+                  TestChecker={TestChecker}
+                />
+
+                <Footer 
+                  totalCount={TotalCount}
+                  bodyCount={bodyCount}
+                  isCaptionLarge={isCaptionLarge}
+                  lectureID={id}
+                  isTest={base.isTest}
+                  togglePDF={togglePDF}
+                />
+              </div>
+              
+              <PdfNumbers />
+              
+              <Button 
+                next = {nextInfo}
+                previous = {prevInfo}
+                isTest = {base.isTest}
+                message = {message}
+                totalCount = {TotalCount}
+                bodyCount = {bodyCount}
+                test1Count = {test1Count}
+                test2Count = {test2Count}
+                answered = {answered}
+                isToggleCorrect = {isToggleCorrect}
+                isToggleWrong = {isToggleWrong}
+              />
+                
+            </div>
+        }
 
     </div>
   )

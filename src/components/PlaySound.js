@@ -1,19 +1,17 @@
 import React from 'react'
+import { useGlobalState, ACTIONS } from '../Context'
+import speaker from "../components/images/speaker.png"
+import mute from "../components/images/mute.png"
 
+const PlaySound=()=>{
+  const {state:{isMusicPlaying}, dispatch} = useGlobalState()
 
-const PlaySound=(props)=>{
-
-    const playPause=()=>{
-      props.music()
-    }
-      
-     
-    return (
-      <div>
-        <div  className="speaker-btn" onClick={playPause}>
-        <img alt='' id="speaker" src={props.musicImage}/>        
-        </div>
-      </div>             
+  return (
+    <div>
+      <div  className="speaker-btn" onClick={()=>dispatch({type: ACTIONS.TOGGLE_MUSIC})}>
+      <img alt='speaker' id="speaker" src={isMusicPlaying? speaker : mute}/>        
+      </div>
+    </div>             
 )
     
 }

@@ -14,14 +14,16 @@ import Adverbs2 from './Adverbs2'
 import Nouns from './Nouns'
 import Pronouns from './Pronouns'
 import Verbs from './Verbs'
+import { useGlobalState, ACTIONS } from '../../../Context'
 
-const GrammarLec = ({progy, setRating}) => {
+const GrammarLec = () => {
+  const {dispatch} = useGlobalState()
+
   const buttonSound = new Audio(buttonsound)
   const[prog, setProg] = useState(10)
   const[isCaptionLarge, setIsCaptionLarge] = useState(false)
   const[counter, setCounter] = useState(0)
 
-  const cumProgy=()=>{progy(17)}
 
   useEffect(()=>{
     setIsCaptionLarge(!isCaptionLarge)
@@ -32,10 +34,15 @@ const GrammarLec = ({progy, setRating}) => {
     setProg(prog+9)
     setCounter(counter+1)
     if( counter ===10){
-      cumProgy()
-      setRating(5,5.0)
-
-      }
+      dispatch({type: ACTIONS.SET_PROGRESS, payload:{id: 'grammar'}})
+      dispatch({
+        type: ACTIONS.STAR_RATING, 
+        payload: {
+          starRating: 5.0, 
+          id: 'grammar'
+        }
+      })
+    }
   }
 
   const prevInfo =() =>{

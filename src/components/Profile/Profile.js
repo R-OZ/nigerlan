@@ -14,29 +14,52 @@ import boy3 from "../images/boy3.svg"
 import Progressbar from '../Progressbar'
 import { Link } from 'react-router-dom';
 import React from 'react'
-
+import { ACTIONS, useGlobalState } from '../../Context'
 import './profile.css'
 
 
 
-const Profile = (props) => {
+const Profile = () => {
+    const { 
+        state:{ 
+            isNavOpen,
+            showSettings,
+            profile:{userName, avatar, progress}, 
+            medal:{goldCount, silverCount, bronzeCount} 
+        }, 
+        dispatch 
+    } = useGlobalState();
 
-    const changeImage = (newImg)=>{
-        props.imageChange(newImg)
+
+    const toggleSettings =()=>{
+        dispatch({type: ACTIONS.TOGGLE_SETTINGS});
+    }
+
+    const AvatarComponent = ({id, imgSrc})=>{
+        const isSelected = avatar === imgSrc;
+        const handleAvatarClick = () => {
+            dispatch({ type: ACTIONS.SET_AVATAR, payload: imgSrc });
+        }
+        return(
+            <label htmlFor={`avatar-id${id}`} className="avatar-label" >
+                <input type="radio" name="avatar-id" id={`avatar-id${id}`} defaultChecked={isSelected} />
+                <img className="avatar-img" alt={`avatar-${id}`} onClick={handleAvatarClick} src={imgSrc} />
+            </label>
+        )
     }
     
 
     return (
-        <div>
-            <div className={!props.isToggle? 'profile-container': 'profile-container -move'} >
+        <React.Fragment>
+            <div className={!isNavOpen? 'profile-container': 'profile-container -move'} >
                 <div className="profile-header">
-                    <img alt="" id='profile-img' src={props.image} />
-                    <p id="profile-name">{props.username}</p>
+                    <img alt="" id='profile-img' src={avatar} />
+                    <p id="profile-name">{userName}</p>
                 </div>
 
                 <div className="profile-progress">
                     <p className="profile-text">Cumulative Progress</p>
-                    <Progressbar bgcolor="#6a1b9a" completed={props.progy} />
+                    <Progressbar bgcolor="#6a1b9a" completed={progress} />
                 </div>
 
                 <div className="profile-hr"></div>
@@ -44,11 +67,11 @@ const Profile = (props) => {
                 <div className="profile-medals">
                     <div className="profile-medal-container1">
                         <img alt="" className='medal-img' src={goldmedal} />
-                        {props.num}
+                        {goldCount}
                     </div>
                     <div className="profile-medal-container2">
-                        <div ><img alt="" className='medal-img' src={silvermedal} />{props.num2}</div>
-                        <div ><img alt="" className='medal-img' src={bronzemedal} />{props.num3}</div>
+                        <div ><img alt="" className='medal-img' src={silvermedal} />{silverCount}</div>
+                        <div ><img alt="" className='medal-img' src={bronzemedal} />{bronzeCount}</div>
                     </div>
                 </div>
 
@@ -60,7 +83,7 @@ const Profile = (props) => {
                         <p className='profile-button-txt'>Feedback</p>
                     </Link>
 
-                    <div className= 'profile-button' onClick={props.handleClick}>
+                    <div className= 'profile-button' onClick={toggleSettings}>
                         <img alt="" className='profile-button-img' src={settings} />
                         <p className='profile-button-txt'>Settings</p>
                     </div>
@@ -70,7 +93,7 @@ const Profile = (props) => {
                         <p className='profile-button-txt'>Logout</p>
                     </div>
 
-                    <a target="_blank" href='https://www.linkedin.com/in/reginald-ojeba/' className="profile-footer">
+                    <a target="_blank" rel="noopener noreferrer" href='https://www.linkedin.com/in/reginald-ojeba/' className="profile-footer">
                         <span id="profile-footer-txt">
                             DEVELOPED BY:&nbsp;
                         </span> 
@@ -78,65 +101,50 @@ const Profile = (props) => {
                     </a>
 
                 </div>
-
-                    
             
             </div>
 
 
-            <div  className={!props.showSet? "settings-container": "settings-container show"}>
+            <div  className={showSettings? "settings-container show": "settings-container"}>
                 <div className="settings-container2">
-                    <img alt="" id="cancel-settings" onClick={props.handleClick} src={cancel} />
+                    <img alt="" id="cancel-settings" onClick={toggleSettings} src={cancel} />
                     <div className="settings-form">
                         <div className="settings-header">Settings</div>
                         <div className="settings-body">
                             
                             <div className="settings-body-head">Enter username</div>
-                            <input type="text" name="username" maxLength='14'  onChange={e => props.updateUsername(e.target.value)} placeholder={props.username} className="settings-username" />
+                            <input 
+                                type="text" name="username" 
+                                maxLength='14'  
+                                onChange={e => dispatch({type: ACTIONS.SET_USERNAME, payload: e.target.value})} 
+                                placeholder={userName} className="settings-username" 
+                            />
                             <div className="settings-body-head">Select your avatar</div>
                             <div className="avatar-container">
                                 <div className="avatar-contain">
-                                    <label htmlFor="avatar-id1" className="avatar-label">
-                                        <input type="radio" name="avatar-id" id="avatar-id1" defaultChecked/>
-                                        <img className="avatar-img" alt="" onClick={()=>changeImage(boy)} src={boy} />
-                                    </label>
-                                    <label htmlFor="avatar-id2" className="avatar-label">
-                                        <input type="radio" name="avatar-id" id="avatar-id2" />
-                                        <img className="avatar-img" alt="" onClick={()=>changeImage(boy2)} src={boy2} />
-                                    </label>
-                                    <label htmlFor="avatar-id3" className="avatar-label">
-                                        <input type="radio" name="avatar-id" id="avatar-id3"/>
-                                        <img className="avatar-img" alt="" onClick={()=>changeImage(boy3)} src={boy3} />                                    </label>
+                                    <AvatarComponent id={1} imgSrc={boy} />
+                                    <AvatarComponent id={2} imgSrc={boy2} />
+                                    <AvatarComponent id={3} imgSrc={boy3} />
                                 </div>
                                 <div className="avatar-contain">
-                                    <label htmlFor="avatar-id4" className="avatar-label">
-                                        <input type="radio" name="avatar-id" id="avatar-id4" />
-                                        <img className="avatar-img" alt="" onClick={()=>changeImage(girl)} src={girl} />
-                                    </label>
-                                    <label htmlFor="avatar-id5" className="avatar-label">
-                                        <input type="radio" name="avatar-id" id="avatar-id5" />
-                                        <img className="avatar-img" alt="" onClick={()=>changeImage(girl2)} src={girl2} />
-                                    </label>
-                                    <label htmlFor="avatar-id6" className="avatar-label">
-                                        <input type="radio" name="avatar-id" id="avatar-id6" />
-                                        <img className="avatar-img" alt="" onClick={()=>changeImage(girl3)} src={girl3} />
-                                    </label>
+                                    <AvatarComponent id={4} imgSrc={girl} />
+                                    <AvatarComponent id={5} imgSrc={girl2} />
+                                    <AvatarComponent id={6} imgSrc={girl3} />
                                 </div>
                             </div>
 
-                            <div className="settings-submit" onClick={props.handleClick}>Save Changes</div>
+                            <div className="settings-submit" onClick={toggleSettings}>Save Changes</div>
 
                             <div className="settings-footer">
-                                Pssssst!...don't forget to give us a feedback.<br />Use the &nbsp; <img alt="" id="footer-image" src={feedback} />&nbsp;feedback button to fill in our questionnaire.
+                                Pssssst!...don't forget to give us a feedback.<br />
+                                Use the &nbsp; <img alt="" id="footer-image" src={feedback} />&nbsp;feedback button to fill in our questionnaire.
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        </React.Fragment>
     )
 }
 
 export default Profile;
-

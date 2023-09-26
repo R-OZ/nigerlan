@@ -15,7 +15,7 @@ import vowel_sound from "../Sounds/vowel.mp3"
 import consonant_sound from "../Sounds/consonanti.mp3"
 import number_sound from "../Sounds/number.mp3"
 import body_sound from "../Sounds/body.mp3"
-import grammar_sound from "../Sounds/Grammar (2).mp3"
+import grammar_sound from "../Sounds/grammar.mp3"
 
 
 const Module = ({id, rating}) => {
@@ -81,7 +81,7 @@ const Module = ({id, rating}) => {
     <Link className="module" style={data[id].color} to={data[id].to} onClick={()=>data[id].sound.play()}>
         
         <div className="module-title-container" >
-            <img src={data[id].image} id="module-img" />
+            <img src={data[id].image} id="module-img" alt='module icon' />
             <h2 id='module-title'>{data[id].title}</h2>
         </div>
 
