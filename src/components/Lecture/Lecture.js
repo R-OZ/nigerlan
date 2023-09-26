@@ -50,7 +50,7 @@ const Lecture = ({id}) => {
 
   useEffect(()=>{
     setIsLoading(true);
-    fetch(`http://localhost:4000/lecture/${id}`)
+    fetch(`https://nigerlan-backend.onrender.com/lecture/${id}`)
     .then((res)=> res.json())
     .then((resData)=>{
       console.log(resData);
