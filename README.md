@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Welcome to NigerLan - Your Child's Gateway to Learning Yoruba
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**NigerLan** is not just another language learning app; it's a virtual adventure designed to make learning Yoruba, an indigenous language of Nigeria, an exhilarating journey for children. With NigerLan, your child will embark on an interactive language learning experience that is both fun and educational. Get ready to unlock the world of Yoruba at [NigerLan App](https://nigerlan.vercel.app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## 🌟 Key Features
 
-### `npm start`
+NigerLan is packed with features that will keep your child engaged and excited about learning Yoruba:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. **Gamified Learning**: Learning Yoruba is an adventure! Our gamified lessons, quizzes, and challenges turn language acquisition into an exciting quest.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. **Interactive Lessons**: Say goodbye to boring textbooks. Dive into our interactive lessons that cover Yoruba pronunciation, vocabulary, and grammar in an engaging and intuitive way.
 
-### `npm test`
+3. **Customizable Profiles**: Every child is unique, and so is their learning journey. Create and customize user profiles for each child, tailoring the experience to their specific needs and skill level.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Rich Multimedia**: Learning is more than words; it's about experiences. Access a treasure trove of multimedia content, including audio pronunciations, videos, and images that bring Yoruba to life.
 
-### `npm run build`
+5. **Progress Tracking**: Keep tabs on your child's progress with detailed performance statistics and achievements. Celebrate milestones together and inspire continuous improvement.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## User Interface
+NigerLan's user interface is designed with children in mind, making Yoruba language learning not just easy but also a joyous experience. Here's a glimpse of what the app looks like on both mobile and desktop devices:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![4 different views of NigerLan](screenshots/shot1.png)
+Settings page | Home page in dark theme \
+Vowel Lecture | Quiz game 
 
-### `npm run eject`
+![4 different views of NigerLan](screenshots/shot2.png)
+Grading system | Consonant Lecture \
+Quiz feedback | Quiz variation 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![4 different views of NigerLan](screenshots/shot3.png)
+Number Lecture | Number Lecture \
+Quiz variation | Body Lecture 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![4 different views of NigerLan](screenshots/shot4.png)
+Grammar Lecture | Grammar Lecture \
+Grammar Lecture | Grammar Lecture 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🚀 Getting Started
 
-## Learn More
+To get started with NigerLan, follow these simple steps:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Clone this repository to your local machine.
+2. Run `npm install` to install all the necessary dependencies.
+3. Start the app in development mode using `npm start`. Visit [http://localhost:3000](http://localhost:3000) in your browser to explore NigerLan.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+For production deployment, build the app with `npm run build`. It's that easy!
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🌟 Ongoing Development
 
-### Analyzing the Bundle Size
+***Please note***: NigerLan is a project that's continuously evolving. We are committed to delivering better performance, new user features, a more extensive curriculum, and even more languages for children to explore. Our mission is to provide the best possible learning experience for your child. Stay tuned for exciting updates!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+NigerLan is more than just a language learning app; it's an educational adventure waiting to be discovered. Start your child's journey today and watch as they become a Yoruba language champion!
