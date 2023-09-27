@@ -58,7 +58,7 @@ const consonant = async (req, res) =>{
                     capital: "J",
                     small: "j",
                     pronounce: "jee",
-                    image: `${BASE_URL}/images/glasses.svg`,
+                    image: `${BASE_URL}/images/sunglasses.svg`,
                     example: "igi (Sunglasses)",
                     sound1: `${BASE_URL}/${AUDIO_PATH}/longj.mp3`,
                     
