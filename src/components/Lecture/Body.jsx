@@ -7,6 +7,13 @@ import NumExtra from './Displays/NumExtra'
 import EndTest from './EndTest'
 import EndLecture from './EndLecture'
 
+export function toggleClick(anyRef){
+    anyRef.current.classList.toggle("-reduce");
+    setTimeout(()=>{
+        anyRef.current.classList.remove("-reduce")
+    },230);
+}
+
 const Body = ({data, lectureID, totalCount, bodyCount, test1Count, test2Count, test1ID, correctCount, TestChecker=()=>{}}) => {
   return (
     <div className="lecture-body">

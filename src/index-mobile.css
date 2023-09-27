@@ -480,11 +480,12 @@ span#test-ans{
   cursor: pointer;
   margin-right: max(10vw,50px);
 }
-p#vowel-capital{
+p.vowel-capital{
   color: rgb(90, 90, 197);
   height: fit-content;
   /* background-color: grey; */
   padding:0;
+  transition: .3s all ease;
 }
 .pronounce-stuff{
   text-align: center;
@@ -498,11 +499,15 @@ p#vowel-capital{
   cursor: pointer;
   /* background-color: #1d0df9; */
 }
-#vowel-img{
+.vowel-img{
   width: 150px;
   height: 150px;
   display: block;
+  transition: .3s all ease;
   /* background-color: blue; */
+}
+.-reduce{
+  transform: scale(0.8);
 }
 .vexample{
   display: flex;
@@ -540,6 +545,7 @@ p#vowel-capital{
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  transition: .3s all ease;
 }
 .conspronounce-stuff{
   text-align: center;
@@ -559,6 +565,7 @@ p#vowel-capital{
   display: block;
   margin: auto;
   margin-bottom: 10px;
+  transition: .3s all ease;
 }
 
 .cexample{
@@ -599,6 +606,8 @@ p#vowel-capital{
   display: block;
   justify-self: center;
   align-self: center;
+  cursor: pointer;
+  transition: .3s all ease;
 }
 .-right{
   /* justify-content: right; */
@@ -613,6 +622,7 @@ p#vowel-capital{
   display: flex;
   /* background-color: yellow; */
   flex-direction: column;
+  transition: .3s all ease;
 }
 .-num{
   color: #1d0df9;
@@ -621,6 +631,7 @@ p#vowel-capital{
   font-size: 40px;
   font-family: 'Varela Round', sans-serif; 
   color:black;
+  transition: .3s all ease;
   /* background-color: green; */
   /* margin-left: 50%; */
 }
@@ -1553,10 +1564,12 @@ iframe{
 }
 .cons-text{
   font-size: 100px;
+  transition: .3s all ease;
 }
 .cons-image{
   width: 100px;
   height: 100px;
+  transition: .3s all ease;
 }
 .num-text{
   font-size: 110px;
@@ -1695,7 +1708,7 @@ iframe{
   #lecture-text{
     font-size: 25px;
   }
-  #vowel-img{
+  .vowel-img{
     width: 200px;
     height: 200px;
   }
@@ -1814,10 +1827,12 @@ iframe{
   }
   .cons-text{
     font-size: 150px;
+    transition: .3s all ease;
   }
   .cons-image{
     width: 150px;
     height: 150px;
+    transition: .3s all ease;
   }
   .cexample{
     font-size: 24px;
