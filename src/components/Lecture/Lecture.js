@@ -18,6 +18,8 @@ import Footer from './Footer'
 
 import { useGlobalState, ACTIONS } from '../../Context'
 
+// const URL = "http://localhost:4000"
+const URL = "https://nigerlan-backend.onrender.com"
 
 
 const Lecture = ({id}) => {
@@ -50,7 +52,7 @@ const Lecture = ({id}) => {
 
   useEffect(()=>{
     setIsLoading(true);
-    fetch(`https://nigerlan-backend.onrender.com/lecture/${id}`)
+    fetch(`${URL}/lecture/${id}`)
     .then((res)=> res.json())
     .then((resData)=>{
       console.log(resData);
@@ -150,8 +152,11 @@ const Lecture = ({id}) => {
   }
 
   const prevInfo =() =>{
-    setTotalCount(TotalCount-1)
-    setProg(prog-currProgy)
+    if (TotalCount> 0){
+      setTotalCount(TotalCount-1)
+      setProg(prog-currProgy)
+
+    }
   }
 
 

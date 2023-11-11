@@ -20,8 +20,9 @@
 .google-form{
   /* background-color: red; */
   overflow: scroll;
-  max-width:fit-content;
+  /* max-width:fit-content; */
 }
+
 .home{
   height: 100vh;
   width: 100%;
@@ -1906,6 +1907,10 @@ iframe{
   }
   .mobile-nav-shadow{
     display: none;
+  }
+  #myIframe{
+    /* background-color: red; */
+    width: 700px !important;
   }
   
   
