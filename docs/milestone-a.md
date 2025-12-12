@@ -23,3 +23,17 @@ remain outside scope. Known defects must be documented and tested as outstanding
 requirements, never asserted as the desired behavior.
 
 No push, merge into `main`, or deployment is authorized by this milestone.
+
+## History integration
+
+The integration commit has the modernization branch and original backend tip as
+parents. The frontend is moved beneath `apps/web/`; the complete backend tip is
+imported beneath `apps/api/`, excluding five tracked `.DS_Store` files. The merge
+uses an explicit tree import after selecting the frontend tree as its starting
+point, avoiding unrelated root-file collisions. Both application trees are
+checked byte-for-byte against their historical originals before the merge is
+committed. This is not an empty ancestry-only merge or a squash import.
+
+The backend's seven original commit objects, authors, and timestamps are retained.
+New integration work receives its actual commit date. Backup refs remain local;
+they have not been pushed.
