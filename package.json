@@ -1,0 +1,29 @@
+{
+  "name": "nigerlan",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "packageManager": "npm@11.19.0",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "npm": "11.19.x"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "npm start --workspace @nigerlan/web",
+    "dev:api": "npm run dev --workspace @nigerlan/api",
+    "start:api": "npm start --workspace @nigerlan/api",
+    "build": "npm run build --workspace @nigerlan/web",
+    "test": "npm test --workspaces",
+    "test:web": "npm test --workspace @nigerlan/web",
+    "test:api": "npm test --workspace @nigerlan/api"
+  },
+  "allowScripts": {
+    "core-js": false,
+    "core-js-pure": false,
+    "fsevents": false
+  }
+}

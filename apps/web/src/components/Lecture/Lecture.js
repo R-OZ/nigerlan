@@ -19,7 +19,7 @@ import Footer from './Footer'
 import { useGlobalState, ACTIONS } from '../../Context'
 
 // const URL = "http://localhost:4000"
-const URL = "https://nigerlan-backend.onrender.com"
+const URL = process.env.REACT_APP_API_URL || "https://nigerlan-backend.onrender.com"
 
 
 const Lecture = ({id}) => {

@@ -1,4 +1,4 @@
 module.exports={
     // BASE_URL: "http://localhost:4000"
-    BASE_URL: "https://nigerlan-backend.onrender.com"
+    BASE_URL: process.env.ASSET_BASE_URL || "https://nigerlan-backend.onrender.com"
 }
