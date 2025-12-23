@@ -64,3 +64,22 @@ checks or application startup scripts are disabled by this policy.
 
 The production build succeeded with three pre-existing effect-dependency
 warnings. These remain visible; behavioral hook changes belong to later work.
+
+## Regression foundation
+
+The React tests use the real context, router, reducer, and lesson component with
+a deterministic API fixture. Audio and Lottie rendering are stubbed only because
+jsdom cannot play/decode media or draw its canvas. Backend tests start the real
+Express app on an ephemeral loopback port and exercise all curriculum routes.
+
+Verified baseline: 21 API cases (16 ordinary passes, five known-defect checks)
+and 14 React cases (11 ordinary passes, three known-defect checks). The separate
+raw-defect command reproduced exactly five API and three React assertion failures.
+It returned nonzero, as intended. No tests were skipped. See
+[known defects](known-defects.md) for the unresolved requirements and limitations.
+
+The only production change needed by these tests is exporting the existing
+reducer; its behavior is unchanged. Test-library updates support React 18's root
+API. ESLint 8 (compatible with CRA 5) and Prettier 3 are pinned for the next quality
+configuration step; ESLint 8's upstream end-of-support is a deferred CRA/Vite
+migration concern, not a claim of a fully modern toolchain.

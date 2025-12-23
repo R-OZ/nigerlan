@@ -21,7 +21,7 @@ export const ACTIONS = {
     STAR_RATING: 'star-rating'
 }
 
-function reducer(state, action){
+export function reducer(state, action){
     switch(action.type){
         case ACTIONS.TOGGLE_NAV:
             return {...state, isNavOpen: !state.isNavOpen}

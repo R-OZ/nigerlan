@@ -19,11 +19,16 @@
     "build": "npm run build --workspace @nigerlan/web",
     "test": "npm test --workspaces",
     "test:web": "npm test --workspace @nigerlan/web",
-    "test:api": "npm test --workspace @nigerlan/api"
+    "test:api": "npm test --workspace @nigerlan/api",
+    "test:known-defects": "node scripts/verify-defects.mjs"
   },
   "allowScripts": {
     "core-js": false,
     "core-js-pure": false,
     "fsevents": false
+  },
+  "devDependencies": {
+    "eslint": "8.57.1",
+    "prettier": "3.9.10"
   }
 }
