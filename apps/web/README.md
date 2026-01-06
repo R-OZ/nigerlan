@@ -2,7 +2,6 @@
 
 **NigerLan** is not just another language learning app; it's a virtual adventure designed to make learning Yoruba, an indigenous language of Nigeria, an exhilarating journey for children. With NigerLan, your child will embark on an interactive language learning experience that is both fun and educational. Get ready to unlock the world of Yoruba at [NigerLan App](https://nigerlan.vercel.app).
 
-
 ## 🌟 Key Features
 
 NigerLan is packed with features that will keep your child engaged and excited about learning Yoruba:
@@ -17,26 +16,25 @@ NigerLan is packed with features that will keep your child engaged and excited a
 
 5. **Progress Tracking**: Keep tabs on your child's progress with detailed performance statistics and achievements. Celebrate milestones together and inspire continuous improvement.
 
-
 ## User Interface
+
 NigerLan's user interface is designed with children in mind, making Yoruba language learning not just easy but also a joyous experience. Here's a glimpse of what the app looks like on both mobile and desktop devices:
 
 ![4 different views of NigerLan](screenshots/shot1.png)
 Settings page | Home page in dark theme \
-Vowel Lecture | Quiz game 
+Vowel Lecture | Quiz game
 
 ![4 different views of NigerLan](screenshots/shot2.png)
 Grading system | Consonant Lecture \
-Quiz feedback | Quiz variation 
+Quiz feedback | Quiz variation
 
 ![4 different views of NigerLan](screenshots/shot3.png)
 Number Lecture | Number Lecture \
-Quiz variation | Body Lecture 
+Quiz variation | Body Lecture
 
 ![4 different views of NigerLan](screenshots/shot4.png)
 Grammar Lecture | Grammar Lecture \
-Grammar Lecture | Grammar Lecture 
-
+Grammar Lecture | Grammar Lecture
 
 ## 🚀 Getting Started
 
@@ -48,9 +46,8 @@ To get started with NigerLan, follow these simple steps:
 
 For production deployment, build the app with `npm run build`. It's that easy!
 
-
 ## 🌟 Ongoing Development
 
-***Please note***: NigerLan is a project that's continuously evolving. We are committed to delivering better performance, new user features, a more extensive curriculum, and even more languages for children to explore. Our mission is to provide the best possible learning experience for your child. Stay tuned for exciting updates!
+_**Please note**_: NigerLan is a project that's continuously evolving. We are committed to delivering better performance, new user features, a more extensive curriculum, and even more languages for children to explore. Our mission is to provide the best possible learning experience for your child. Stay tuned for exciting updates!
 
 NigerLan is more than just a language learning app; it's an educational adventure waiting to be discovered. Start your child's journey today and watch as they become a Yoruba language champion!

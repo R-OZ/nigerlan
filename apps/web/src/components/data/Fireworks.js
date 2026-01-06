@@ -1,26 +1,26 @@
-import React from 'react'
-import Lottie from 'react-lottie'
-import sparks from "../images/sparks.json"
+import React from 'react';
+import Lottie from 'react-lottie';
+import sparks from '../images/sparks.json';
 
 const Fireworks = () => {
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: sparks,
-        rendererSettings: {
-          preserveAspectRatio: "xMidYMid slice"
-        }
-      };
-    
-    return (
-      <div>
-        <Lottie 
-          options={defaultOptions}
-          height={300}
-          // width={600}
-        />
-      </div>
-    );
-}
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: sparks,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
 
-export default Fireworks
+  return (
+    <div>
+      <Lottie
+        options={defaultOptions}
+        height={300}
+        // width={600}
+      />
+    </div>
+  );
+};
+
+export default Fireworks;

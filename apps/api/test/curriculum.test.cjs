@@ -15,7 +15,9 @@ before(async () => {
 after(async () => {
   if (!server?.listening) return;
   server.closeAllConnections();
-  await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
+  await new Promise((resolve, reject) =>
+    server.close((error) => (error ? reject(error) : resolve())),
+  );
 });
 
 const modules = {
@@ -55,7 +57,10 @@ for (const [id, counts] of Object.entries(modules)) {
     test(`${id}: every referenced media file exists`, async () => {
       const data = await (await fetch(`${base}/lecture/${id}`)).json();
       for (const media of mediaReferences(data)) {
-        assert.ok(existsSync(path.join(__dirname, '../public', media)), `Missing ${id} media: ${media}`);
+        assert.ok(
+          existsSync(path.join(__dirname, '../public', media)),
+          `Missing ${id} media: ${media}`,
+        );
       }
     });
   }
@@ -68,7 +73,10 @@ test('all question option sets survive repeated randomization', async () => {
       const next = await (await fetch(`${base}/lecture/${id}`)).json();
       for (const phase of ['test1', 'test2']) {
         next[phase].forEach((question, index) => {
-          assert.deepEqual([...question.question].sort(), [...baseline[phase][index].question].sort());
+          assert.deepEqual(
+            [...question.question].sort(),
+            [...baseline[phase][index].question].sort(),
+          );
         });
       }
     }
@@ -99,10 +107,22 @@ test('controller failure produces an unsuccessful JSON response', async () => {
   const vowel = require('../controllers/vowel');
   let status;
   let body;
-  await vowel({}, {
-    json() { throw new Error('simulated response failure'); },
-    status(code) { status = code; return { json(value) { body = value; } }; },
-  });
+  await vowel(
+    {},
+    {
+      json() {
+        throw new Error('simulated response failure');
+      },
+      status(code) {
+        status = code;
+        return {
+          json(value) {
+            body = value;
+          },
+        };
+      },
+    },
+  );
   assert.equal(status, 500);
   assert.ok(body && Object.hasOwn(body, 'message'));
 });
@@ -113,8 +133,15 @@ function knownDefect(id, description, check) {
   test(`KNOWN ${id}: ${description}`, async (context) => {
     if (process.env.NIGERLAN_VERIFY_DEFECTS === '1') return check();
     let failure;
-    try { await check(); } catch (error) { failure = error; }
-    assert.ok(failure instanceof assert.AssertionError, `${id} changed: remove/update the known-defect marker after review`);
+    try {
+      await check();
+    } catch (error) {
+      failure = error;
+    }
+    assert.ok(
+      failure instanceof assert.AssertionError,
+      `${id} changed: remove/update the known-defect marker after review`,
+    );
     context.diagnostic(`Expected assertion failure; unresolved ${id}: ${failure.message}`);
   });
 }
@@ -129,7 +156,8 @@ for (const file of missingBodyMedia) {
   knownDefect(`NL-001/${file}`, 'referenced body recording should be available', async () => {
     const data = await (await fetch(`${base}/lecture/body`)).json();
     const media = `/audio/BodyPro/${file}`;
-    if (!mediaReferences(data).includes(media)) throw new Error(`Reference changed: review NL-001/${file}`);
+    if (!mediaReferences(data).includes(media))
+      throw new Error(`Reference changed: review NL-001/${file}`);
     assert.equal((await fetch(base + media)).status, 200, `Referenced recording missing: ${media}`);
   });
 }
@@ -137,7 +165,10 @@ test('body media outside the four recorded defects exists', async () => {
   const data = await (await fetch(`${base}/lecture/body`)).json();
   for (const media of mediaReferences(data)) {
     if (missingBodyMedia.some((file) => media === `/audio/BodyPro/${file}`)) continue;
-    assert.ok(existsSync(path.join(__dirname, '../public', media)), `New missing body media: ${media}`);
+    assert.ok(
+      existsSync(path.join(__dirname, '../public', media)),
+      `New missing body media: ${media}`,
+    );
   }
 });
 

@@ -1,0 +1,12 @@
+node_modules/
+.runtime/
+.npm-cache/
+build/
+coverage/
+package-lock.json
+# Preserve third-party artwork/animation data verbatim pending provenance review.
+apps/web/src/components/images/
+apps/web/src/components/data/*.json
+apps/web/public/
+apps/api/public/
+apps/web/screenshots/

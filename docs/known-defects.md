@@ -10,13 +10,13 @@ After a fix, remove the marker and retain the assertion as an ordinary regressio
 It intentionally exits nonzero until every documented assertion is satisfied.
 Never describe a green baseline run as evidence these defects have been fixed.
 
-| ID | Observed defect | Desired assertion / location | Later work |
-| --- | --- | --- | --- |
+| ID     | Observed defect                                                                             | Desired assertion / location                                         | Later work                                                       |
+| ------ | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | NL-001 | Four body audio references return 404: longlongtongue, longlongneck, longlongshoulder, butt | Each referenced MP3 returns 200; `apps/api/test/curriculum.test.cjs` | Curriculum/media correction; obtain a licensed missing recording |
-| NL-002 | The butt recording question selects back as its answer | Recording name and correct answer agree; API tests | Explicit question/answer schema and content review |
-| NL-003 | Six failed vowel attempts produce 120% state progress | Progress stays within 0–100; `apps/web/src/Context.test.js` | Idempotent completion and score semantics |
-| NL-004 | Learner profile resets on provider remount/refresh | Chosen name survives remount; Context tests | Anonymous local persistence, with progress and medals |
-| NL-005 | A reused Lecture component does not fetch when its id changes | New id triggers its API request; `Lecture.test.js` | Request lifecycle and route-transition fixes |
+| NL-002 | The butt recording question selects back as its answer                                      | Recording name and correct answer agree; API tests                   | Explicit question/answer schema and content review               |
+| NL-003 | Six failed vowel attempts produce 120% state progress                                       | Progress stays within 0–100; `apps/web/src/Context.test.js`          | Idempotent completion and score semantics                        |
+| NL-004 | Learner profile resets on provider remount/refresh                                          | Chosen name survives remount; Context tests                          | Anonymous local persistence, with progress and medals            |
+| NL-005 | A reused Lecture component does not fetch when its id changes                               | New id triggers its API request; `Lecture.test.js`                   | Request lifecycle and route-transition fixes                     |
 
 ## Additional audited risks, not yet executable regressions
 
