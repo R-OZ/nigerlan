@@ -20,7 +20,15 @@
     "test": "npm test --workspaces",
     "test:web": "npm test --workspace @nigerlan/web",
     "test:api": "npm test --workspace @nigerlan/api",
-    "test:known-defects": "node scripts/verify-defects.mjs"
+    "test:known-defects": "node scripts/verify-defects.mjs",
+    "lint": "eslint apps/api apps/web/src scripts .eslintrc.cjs --ext .js,.jsx,.cjs,.mjs --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "security:dependencies": "npm audit --audit-level=high",
+    "security:api": "npm audit --workspace @nigerlan/api --omit=dev --audit-level=high",
+    "check:repo": "node scripts/check-repository.mjs",
+    "security:install": "node scripts/install-gitleaks.mjs",
+    "security:secrets": "node scripts/scan-secrets.mjs"
   },
   "allowScripts": {
     "core-js": false,

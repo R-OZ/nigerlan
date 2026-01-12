@@ -25,6 +25,8 @@ Never describe a green baseline run as evidence these defects have been fixed.
   caption). Strict lint and CI builds must keep reporting them until reviewed fixes.
 - Audio is constructed during rendering and played from reducer side effects.
   jsdom stubs verify interactions, not real decoding or browser autoplay behavior.
+- Browser smoke confirms the legacy React root, invalid `exact` attributes, and
+  Lottie lifecycle warnings remain; these belong to later React/animation work.
 - Accessibility, responsive rendering, curriculum accuracy, and asset permissions
   need browser/device, language-specialist, and owner review respectively.
 - No database, login, teacher workflow, or external-service credentials are needed

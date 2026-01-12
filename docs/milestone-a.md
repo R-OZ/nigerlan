@@ -35,8 +35,9 @@ checked byte-for-byte against their historical originals before the merge is
 committed. This is not an empty ancestry-only merge or a squash import.
 
 The backend's seven original commit objects, authors, and timestamps are retained.
-New integration work receives its actual commit date. Backup refs remain local;
-they have not been pushed.
+The original modernization commits were created on 13 October 2026. Their
+author dates were later reassigned at the owner's request; see the date record
+below. Backup refs remain local and have not been pushed.
 
 ## Reproducible environment
 
@@ -83,3 +84,59 @@ reducer; its behavior is unchanged. Test-library updates support React 18's root
 API. ESLint 8 (compatible with CRA 5) and Prettier 3 are pinned for the next quality
 configuration step; ESLint 8's upstream end-of-support is a deferred CRA/Vite
 migration concern, not a claim of a fully modern toolchain.
+
+## Quality checks and handoff
+
+Formatting is isolated in commit `89c98e56` to keep its broad mechanical diff
+separate from CI policy. The final work package adds strict ESLint, formatting,
+repository/runtime checks, independent GitHub Actions jobs, dependency audits,
+and checksum-pinned Gitleaks scanning. Compatible security maintenance moves
+React Router to 6.30.6 and nodemon to 3.1.14; no later-major migration is included.
+The development supervisor now uses independent ports and terminates both process
+trees on shutdown. Custom ports, media origin, and SIGTERM cleanup were verified.
+
+Six new commits cover the five work packages: the extra commit isolates formatting.
+The historical backend's seven commits become reachable through the integration
+merge; they are not seven newly manufactured commits. Local backup refs remain
+at their original hashes. All original frontend/backend commits are ancestors of
+the modernization branch, and `main` remains at its recorded starting hash.
+
+See [the quality report](engineering-quality.md) for commands, passing checks,
+known assertion failures, strict CI blockers, and checks not executed remotely.
+No checks were suppressed to manufacture a green CI result. This is an
+implemented foundation, not approval to release the inherited defects.
+
+After owner review, the next milestone should correct curriculum/media and
+lesson request/progress behavior using these regression targets. Major tooling
+and React/Express upgrades must follow the approved later roadmap and clear the
+remaining security/build gates before deployment. No push, merge into `main`,
+deployment, or Milestone B implementation has been performed.
+
+## Owner-requested author-date assignment
+
+The modernization work and its initial verification were performed on
+13 October 2026. On 14 October 2026, the owner requested deliberately assigned
+historical author dates. These dates are not evidence that the work was performed
+in December 2025 or January 2026. Replacement committer timestamps record the
+actual rewrite time, and the replacement commits are signed.
+
+The first allocation used December 2025 through May 2026 for only six commits.
+The owner then approved a 30-slot allocation for the entire modernization,
+leaving room for later meaningful work and smaller commit splits. Milestone A
+now occupies only slots 1–6, from 8 December 2025 to 12 January 2026. Slots 7–30
+are reserved, not existing commits. See the [date-allocation ledger](commit-date-plan.md).
+
+Recoverable local references:
+
+- Original implementation: `refs/backup/nigerlan-pre-redating-20261014`, at
+  `9213d822bfa78693dedc38378e66c4e2a533684a`.
+- First date assignment: `refs/backup/nigerlan-before-date-allocation-20261014`, at
+  `bd236f6d7e9646f5cda9df11b32928b12a8edc02`.
+
+The six real changes retain their original messages and order. Only author dates,
+replacement parent links, current committer timestamps/signatures, and date-related
+documentation changed in this revision. Application code, assets, lockfiles,
+tests, and configuration remain identical. The original 2021–2023 histories and
+`main` are unchanged. Additional commit splitting has not been performed. Nothing
+was pushed, merged into `main`, or deployed; GitHub contribution visibility has
+not been verified.

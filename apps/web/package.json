@@ -9,7 +9,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-lottie": "1.2.10",
-    "react-router-dom": "6.16.0",
+    "react-router-dom": "6.30.6",
     "web-vitals": "1.1.2"
   },
   "scripts": {
@@ -17,12 +17,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --runInBand",
     "test:watch": "react-scripts test"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
