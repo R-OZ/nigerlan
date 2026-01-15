@@ -1,9 +1,8 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Context, { useGlobalState } from '../../Context';
-import { knownDefect } from '../../testSupport/knownDefect';
 import Lecture from './Lecture';
 
 // Minimal valid lesson, intentionally independent of the backend randomizer.
@@ -68,7 +67,7 @@ test('loading transitions to the fetched lesson and previous stops at the first 
   expect(await screen.findByText('Fixture vowel lesson')).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Previous' }));
   expect(screen.getByText('Fixture vowel lesson')).toBeInTheDocument();
-  expect(global.fetch).toHaveBeenCalledWith(expect.stringMatching(/\/lecture\/vowel$/));
+  expect(global.fetch.mock.calls[0][0]).toMatch(/\/lecture\/vowel$/);
 });
 
 test.each([
@@ -118,11 +117,95 @@ test.each(['network unavailable', 'invalid JSON'])(
   },
 );
 
-knownDefect('NL-005', 'changing the lesson id should fetch the next curriculum', async () => {
+test('NL-005: changing the lesson id fetches new content and resets the quiz', async () => {
+  const user = userEvent.setup();
   const view = render(<Lecture id="vowel" />, { wrapper: Wrapper });
   await screen.findByText('Fixture vowel lesson');
+  await user.click(screen.getByRole('button', { name: 'Next Slide' }));
+  await user.click(screen.getByRole('button', { name: 'Finish' }));
+  await user.click(screen.getByRole('button', { name: 'A', exact: true }));
+  expect(screen.getByRole('button', { name: 'A', exact: true })).toBeDisabled();
+  global.fetch.mockResolvedValue({ json: async () => ({ ...lesson, lecTxt: 'New lesson' }) });
   view.rerender(<Lecture id="consonant" />);
-  await waitFor(() =>
-    expect(global.fetch).toHaveBeenCalledWith(expect.stringMatching(/\/lecture\/consonant$/)),
-  );
+  expect(await screen.findByText('New lesson')).toBeInTheDocument();
+  expect(global.fetch.mock.calls[1][0]).toMatch(/\/lecture\/consonant$/);
+  expect(screen.queryByText('CORRECT!!!')).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Next Slide' }));
+  await user.click(screen.getByRole('button', { name: 'Finish' }));
+  expect(screen.getByRole('button', { name: 'A', exact: true })).toBeEnabled();
+  expect(screen.getByRole('button', { name: /^Next/ })).toBeDisabled();
+  await user.click(screen.getByRole('button', { name: 'B', exact: true }));
+  await user.click(screen.getByRole('button', { name: /^Next/ }));
+  await user.click(screen.getByRole('button', { name: 'B', exact: true }));
+  await user.click(screen.getByRole('button', { name: /^Next/ }));
+  expect(screen.getByText('You scored: 0 out of 2')).toBeInTheDocument();
+});
+
+test.each(['success', 'failure'])(
+  'a stale request %s cannot replace the current lesson or finish its loading state',
+  async (outcome) => {
+    let resolveOld;
+    let rejectOld;
+    let resolveCurrent;
+    global.fetch
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve, reject) => {
+            resolveOld = resolve;
+            rejectOld = reject;
+          }),
+      )
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            resolveCurrent = resolve;
+          }),
+      );
+    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const view = render(<Lecture id="vowel" />, { wrapper: Wrapper });
+    const oldSignal = global.fetch.mock.calls[0][1]?.signal;
+    view.rerender(<Lecture id="consonant" />);
+    await act(async () => {
+      if (outcome === 'success') resolveOld({ json: async () => lesson });
+      else rejectOld(new Error('Old request failed'));
+    });
+    expect(screen.queryByText('Fixture vowel lesson')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Next Slide' })).not.toBeInTheDocument();
+    expect(log).not.toHaveBeenCalledWith('Old request failed');
+    expect(oldSignal?.aborted).toBe(true);
+    await act(async () => {
+      resolveCurrent({ json: async () => ({ ...lesson, lecTxt: 'Current lesson' }) });
+    });
+    expect(screen.getByText('Current lesson')).toBeInTheDocument();
+  },
+);
+
+test('changing the lesson clears a previous request error', async () => {
+  global.fetch.mockRejectedValueOnce(new Error('First lesson unavailable'));
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  const view = render(<Lecture id="vowel" />, { wrapper: Wrapper });
+  await screen.findByRole('heading', { name: 'First lesson unavailable' });
+  view.rerender(<Lecture id="consonant" />);
+  expect(await screen.findByText('Fixture vowel lesson')).toBeInTheDocument();
+  expect(
+    screen.queryByRole('heading', { name: 'First lesson unavailable' }),
+  ).not.toBeInTheDocument();
+});
+
+test('rerendering the same lesson preserves the current slide without refetching', async () => {
+  const user = userEvent.setup();
+  const view = render(<Lecture id="vowel" />, { wrapper: Wrapper });
+  await screen.findByText('Fixture vowel lesson');
+  await user.click(screen.getByRole('button', { name: 'Next Slide' }));
+  view.rerender(<Lecture id="vowel" />);
+  expect(screen.getByText('*Next will be an assessment*')).toBeInTheDocument();
+  expect(global.fetch).toHaveBeenCalledTimes(1);
+});
+
+test('unmounting aborts the active lesson request', async () => {
+  global.fetch.mockImplementation(() => new Promise(() => {}));
+  const view = render(<Lecture id="vowel" />, { wrapper: Wrapper });
+  const signal = global.fetch.mock.calls[0][1]?.signal;
+  view.unmount();
+  await waitFor(() => expect(signal?.aborted).toBe(true));
 });

@@ -22,6 +22,11 @@ import { useGlobalState, ACTIONS } from '../../Context';
 const URL = process.env.REACT_APP_API_URL || 'https://nigerlan-backend.onrender.com';
 
 const Lecture = ({ id }) => {
+  // A different curriculum starts a fresh slide, quiz, and request lifecycle.
+  return <LectureSession key={id} id={id} />;
+};
+
+const LectureSession = ({ id }) => {
   const { dispatch } = useGlobalState();
 
   const buttonSound = new Audio(buttonsound);
@@ -44,14 +49,17 @@ const Lecture = ({ id }) => {
   const [isToggleCorrect, setIsToggleCorrect] = useState(false);
   const [isToggleWrong, setIsToggleWrong] = useState(false);
   const [test1ID, setTest1ID] = useState(0);
-  const [isCaptionLarge, setIsCaptionLarge] = useState(false);
   const [isPdf, setIsPdf] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
     setIsLoading(true);
-    fetch(`${URL}/lecture/${id}`)
+    setErrorMessage('');
+    fetch(`${URL}/lecture/${id}`, { signal: controller.signal })
       .then((res) => res.json())
       .then((resData) => {
+        if (!active) return;
         console.log(resData);
         setBase(resData);
         setBodyCount(resData.lecBody.length);
@@ -59,11 +67,18 @@ const Lecture = ({ id }) => {
         setTest2Count(resData.test2.length);
       })
       .catch((err) => {
+        if (!active) return;
         setErrorMessage(err.message);
         console.error(err.message);
       })
-      .finally(() => setIsLoading(false));
-  }, []);
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [id]);
 
   const currProgy = Math.round(90 / (bodyCount + test1Count + test2Count));
 
@@ -98,11 +113,6 @@ const Lecture = ({ id }) => {
       },
     });
   };
-
-  useEffect(() => {
-    setIsCaptionLarge(!isCaptionLarge);
-    setIsCaptionLarge(!isCaptionLarge);
-  }, []);
 
   const medalScore = () => {
     let total = test1Count + test2Count;
@@ -369,7 +379,7 @@ const Lecture = ({ id }) => {
             <Footer
               totalCount={TotalCount}
               bodyCount={bodyCount}
-              isCaptionLarge={isCaptionLarge}
+              isCaptionLarge
               lectureID={id}
               isTest={base.isTest}
               togglePDF={togglePDF}

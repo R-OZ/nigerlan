@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import buttonsound from '../../Sounds/buttonsound.mp3';
 import Progressbar from '../../Progressbar';
@@ -21,13 +21,7 @@ const GrammarLec = () => {
 
   const buttonSound = new Audio(buttonsound);
   const [prog, setProg] = useState(10);
-  const [isCaptionLarge, setIsCaptionLarge] = useState(false);
   const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    setIsCaptionLarge(!isCaptionLarge);
-    setIsCaptionLarge(!isCaptionLarge);
-  }, []);
 
   const nextInfo = () => {
     buttonSound.play();

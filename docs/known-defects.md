@@ -16,13 +16,23 @@ Never describe a green baseline run as evidence these defects have been fixed.
 | NL-002 | The butt recording question selects back as its answer                                      | Recording name and correct answer agree; API tests                   | Explicit question/answer schema and content review               |
 | NL-003 | Six failed vowel attempts produce 120% state progress                                       | Progress stays within 0–100; `apps/web/src/Context.test.js`          | Idempotent completion and score semantics                        |
 | NL-004 | Learner profile resets on provider remount/refresh                                          | Chosen name survives remount; Context tests                          | Anonymous local persistence, with progress and medals            |
-| NL-005 | A reused Lecture component does not fetch when its id changes                               | New id triggers its API request; `Lecture.test.js`                   | Request lifecycle and route-transition fixes                     |
+
+## Resolved during build-failure follow-up (14 October 2026)
+
+NL-005 is now an ordinary regression: changing the lesson ID fetches its curriculum
+and resets slide/quiz state. The request is cancelled on cleanup, and late success
+or failure cannot update the active session. Tests also cover recovery from an
+old lesson error, preserving a session when its ID is unchanged, and unmounting.
+The grammar caption effect was unused; the lecture caption now renders at its
+existing settled size without an effect. All three hook warnings are resolved.
+
+The baseline now has 40 cases: 33 ordinary regressions and seven known-defect
+checks. Direct desired assertions still fail for NL-001 through NL-004 above.
 
 ## Additional audited risks, not yet executable regressions
 
-- Fetch ignores HTTP status, has no cancellation/timeout, and can expose raw errors.
-- Three React effect dependency warnings remain (Lecture fetch/caption and grammar
-  caption). Strict lint and CI builds must keep reporting them until reviewed fixes.
+- Fetch still ignores HTTP status, has no timeout, and can expose raw errors.
+  Cancellation and stale-response handling are now covered by regression tests.
 - Audio is constructed during rendering and played from reducer side effects.
   jsdom stubs verify interactions, not real decoding or browser autoplay behavior.
 - Browser smoke confirms the legacy React root, invalid `exact` attributes, and

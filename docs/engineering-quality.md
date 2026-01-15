@@ -1,6 +1,6 @@
 # Engineering quality and Milestone A verification
 
-## Local commands and CI policy
+## Original Milestone A commands and CI policy
 
 The workflow runs on pull requests, pushes to `main`/the modernization branch,
 and manual dispatch. Each check is an independent matrix job with `fail-fast:
@@ -14,6 +14,9 @@ The secrets job needs no npm dependencies: its checksum-pinned Gitleaks binary
 scans a snapshot of current non-ignored files and all reachable Git refs. It uses
 redacted output and no project-specific allowlist. Default scanner rules and
 allowlists still apply; scanning cannot prove absence of all secrets or PII.
+
+The following table records the original 13 October baseline; the follow-up below
+supersedes the lint, build, test counts, and hosted-workflow status.
 
 | Command/check                        | Observed local result        | Interpretation                                                                          |
 | ------------------------------------ | ---------------------------- | --------------------------------------------------------------------------------------- |
@@ -90,3 +93,39 @@ For the later owner-requested author-date changes, see the
 The results above describe verification performed on 13 October 2026, not the
 assigned historical author dates. The current allocation is recorded in the
 [date-allocation ledger](commit-date-plan.md).
+
+## Build-failure follow-up — 14 October 2026
+
+The pushed `3e3b696e` revision failed GitHub lint and build because of the three
+known React effect dependency warnings. Local `CI=true npm run build` reproduced
+the exact screenshot error. Five targeted regression assertions also failed on
+the old implementation before the fix.
+
+The follow-up removes unused grammar caption state, preserves the lecture
+caption's settled appearance without an effect, and gives each lesson ID a fresh
+session. Fetch follows the ID with abort/cleanup handling so old requests cannot
+change the new session. NL-005 is now a normal passing regression. No lint rules,
+CI failure conditions, security gates, or dependency versions were relaxed.
+
+Verification after the fix:
+
+- `npm run lint`: passed with zero errors/warnings.
+- `CI=true npm run build`: passed. CRA's inherited Node `fs.F_OK` deprecation
+  notice remains nonfatal.
+- `CI=true npm test`: 40 baseline cases passed (33 ordinary, seven known-defect
+  checks). API listeners initially hit sandbox restrictions; the successful rerun
+  had local loopback access. Existing React Router/DOM notices remain visible.
+- `npm run test:known-defects`: failed on the seven remaining desired assertions
+  (four missing recordings, one answer mismatch, progress overflow, profile loss).
+
+GitHub's checks for the previous revision confirm repository hygiene, formatting,
+tests, API dependency security, and secret scanning passed; lint, build, and the
+full dependency audit failed. The dependency audit remains a separate blocker
+requiring the planned dependency/tooling work, not warning suppression.
+
+Vercel's previous preview failed with build exit code 1. Its detailed logs require
+an authenticated dashboard session unavailable in the inspection browser; the
+same cause as GitHub is plausible but unverified. Additional Netlify checks for
+`peaceful-otter-ce11ee` report only “Deploy failed,” not specific redirect/header
+errors. Neither hosted build is claimed fixed by local verification. No hosting
+configuration or production deployment was changed by this follow-up.
