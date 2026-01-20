@@ -49,12 +49,17 @@ before later behavior changes.
 
 ## Existing hosting compatibility
 
-No hosting settings have been changed and nothing has been deployed. A future
-Vercel deployment can use repository root, install `npm ci`, build `npm run build`,
-and output `apps/web/build`. A future Render deployment can use repository root,
-install `npm ci`, and start `npm run start:api`. Both hosts must use the declared
-Node/npm versions. Keep existing SPA rewrites on Vercel. Verify dashboard settings
-before approving any merge or deployment.
+Vercel's Root Directory must be the repository root. The root `vercel.json`
+configures install `npm ci`, build `npm run build`, and output `apps/web/build`.
+The old root-level `build` setting no longer matches the workspace layout; the
+file-based output setting overrides it for this branch. CI verifies the configured
+directory contains the built HTML and asset manifest after compilation.
+
+Render can use repository root, install `npm ci`, and start `npm run start:api`.
+Both hosts must use the declared Node/npm versions. Existing Vercel routing rules
+are not changed by this build configuration. Verify dashboard settings and SPA
+deep links before approving a production merge or deployment. Connected Git
+integrations can automatically attempt preview deployments when a branch is pushed.
 
 Production defaults remain the existing Render API/media origin. Override
 `REACT_APP_API_URL` at frontend build time and `ASSET_BASE_URL` on the API host for
@@ -80,11 +85,11 @@ supports macOS ARM64 and Linux x64; other platforms can supply Gitleaks 8.30.1
 through `GITLEAKS_BIN`.
 
 **Milestone A is not a green deployment gate.** Strict lint and `CI=true` builds
-currently fail on three inherited effect warnings; the full dependency audit
-fails on high-severity legacy tooling advisories. These checks remain enabled.
+now pass after the lesson-lifecycle fix; the full dependency audit still fails on
+high-severity legacy tooling advisories. These checks remain enabled.
 The normal regression suite separates ordinary passes from explicitly named
 known-defect checks. `npm run test:known-defects` deliberately reproduces the
-eight unresolved assertions without that handling.
+seven unresolved assertions without that handling.
 
 See [verification results and CI policy](docs/engineering-quality.md)
 and [known defects](docs/known-defects.md) before reviewing or deploying changes.

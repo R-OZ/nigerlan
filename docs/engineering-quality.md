@@ -129,3 +129,25 @@ same cause as GitHub is plausible but unverified. Additional Netlify checks for
 `peaceful-otter-ce11ee` report only “Deploy failed,” not specific redirect/header
 errors. Neither hosted build is claimed fixed by local verification. No hosting
 configuration or production deployment was changed by this follow-up.
+
+## Vercel output-directory follow-up — 14 October 2026
+
+The owner's subsequent Vercel error for `3de4cd44` confirms compilation completed,
+but the platform expected root-level `build`. The npm workspace actually emits
+`apps/web/build`. This identifies the preview failure separately from the resolved
+React hook warnings.
+
+Root `vercel.json` now declares `npm ci`, `npm run build`, and output directory
+`apps/web/build`. Vercel documents that this property overrides the dashboard's
+output setting: [outputDirectory reference](https://vercel.com/docs/project-configuration/vercel-json#outputdirectory).
+The project Root Directory must remain the repository root. No routing rules,
+application code, dependency versions, or Render settings changed.
+
+Local verification: `CI=true npm run build` passed; root `build` was absent;
+`apps/web/build/index.html` and `asset-manifest.json` were nonempty; all 46 manifest
+assets existed. The new GitHub build-step output verification was parsed from the
+workflow and executed successfully locally. Formatting and repository checks
+passed. Application tests were not repeated for this configuration-only change.
+Vercel's hosted preview still needs to rerun against the new configuration; local
+verification does not certify deployment, SPA routing, or hosted API availability.
+The separate dependency-security blocker remains unresolved.

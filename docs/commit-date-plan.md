@@ -4,7 +4,7 @@ Approved by the owner on 14 October 2026. These are deliberately assigned author
 dates; committer timestamps must continue to record actual commit/rewrite times.
 The existing Milestone A work was implemented on 13 October 2026.
 
-Thirty slots are planning capacity, not a mandatory commit count. Only slots 1–7
+Thirty slots are planning capacity, not a mandatory commit count. Only slots 1–8
 have been assigned to existing changes. Do not create empty commits or invent work
 to fill unused slots. This schedule does not authorize later implementation,
 pushing, merging, or deployment.
@@ -20,7 +20,7 @@ All assigned times are 12:00:00 Africa/Lagos (UTC+01:00).
 | 5    | 2026-01-06  | Assigned | Source formatting                    |
 | 6    | 2026-01-12  | Assigned | CI and security checks               |
 | 7    | 2026-01-15  | Assigned | Fix lecture lifecycle and CI build   |
-| 8    | 2026-01-20  | Reserved | Future meaningful engineering change |
+| 8    | 2026-01-20  | Assigned | Configure Vercel workspace output    |
 | 9    | 2026-01-26  | Reserved | Future meaningful engineering change |
 | 10   | 2026-01-30  | Reserved | Future meaningful engineering change |
 | 11   | 2026-02-04  | Reserved | Future meaningful engineering change |
@@ -46,9 +46,9 @@ All assigned times are 12:00:00 Africa/Lagos (UTC+01:00).
 
 ## Allocation rules
 
-- The next reserved author date is 20 January 2026, after the build-failure
-  follow-up assigned to 15 January 2026. That follow-up was implemented on
-  14 October 2026; the assigned date does not represent its actual work date.
+- The next reserved author date is 26 January 2026, after the Vercel output
+  follow-up assigned to 20 January 2026. Both build follow-ups were implemented
+  on 14 October 2026; their assigned dates do not represent their actual work dates.
 - Allocate approved subsequent changes in implementation order. Update this ledger
   as real changes are committed; reserved rows are not evidence of completed work.
 - Use gaps between planned dates for necessary splits before assigning subsequent

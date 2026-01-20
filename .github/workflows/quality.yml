@@ -40,6 +40,20 @@ jobs:
       - run: npm run ${{ matrix.command }}
         env:
           CI: 'true'
+      - name: Verify Vercel output directory
+        if: matrix.command == 'build'
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const { outputDirectory } = require('./vercel.json');
+          for (const file of ['index.html', 'asset-manifest.json']) {
+            const artifact = path.join(outputDirectory, file);
+            assert.ok(fs.statSync(artifact).size > 0, `Empty deployment artifact: ${artifact}`);
+          }
+          console.log(`Vercel output verified: ${outputDirectory}`);
+          NODE
 
   secrets:
     name: Current files and Git history secrets
