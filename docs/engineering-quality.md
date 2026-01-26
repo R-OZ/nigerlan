@@ -2,8 +2,10 @@
 
 ## Original Milestone A commands and CI policy
 
-The workflow runs on pull requests, pushes to `main`/the modernization branch,
-and manual dispatch. Each check is an independent matrix job with `fail-fast:
+The workflow runs on pull requests, pushes to `main`, and manual dispatch.
+Feature-branch pushes are checked through their open pull request, avoiding a
+duplicate full run for the same update. A branch without a pull request can use
+manual dispatch; it does not receive an automatic push run. Each check is an independent matrix job with `fail-fast:
 false`; one failure cannot prevent the other jobs from reporting. Actions are
 pinned to verified upstream commit SHAs, repository permissions are read-only,
 checkout credentials are not persisted, and complete Git history is available.
@@ -151,3 +153,10 @@ passed. Application tests were not repeated for this configuration-only change.
 Vercel's hosted preview still needs to rerun against the new configuration; local
 verification does not certify deployment, SPA routing, or hosted API availability.
 The separate dependency-security blocker remains unresolved.
+
+## Duplicate-check cleanup — 14 October 2026
+
+Removed the modernization branch from the push trigger. Pull requests still run
+all eight checks, and `main` pushes and manual dispatch retain the same checks.
+The matrix, severity thresholds, secret scan, permissions, and failure behavior
+are unchanged. Existing historical runs remain visible in the PR timeline.

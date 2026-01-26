@@ -2,7 +2,7 @@ name: Engineering quality
 
 on:
   push:
-    branches: [main, codex/nigerlan-modernization]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
