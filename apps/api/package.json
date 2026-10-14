@@ -1,0 +1,22 @@
+{
+  "name": "@nigerlan/api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.6",
+    "express": "4.22.3"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.14"
+  },
+  "private": true
+}

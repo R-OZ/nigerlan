@@ -1,61 +1,42 @@
 {
-  "name": "react-task-tracker",
+  "name": "nigerlan",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@google-cloud/translate": "^6.2.2",
-    "@mui/material": "^5.10.8",
-    "@svgr/core": "^8.1.0",
-    "@svgr/webpack": "^8.1.0",
-    "@testing-library/jest-dom": "^5.13.0",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "dotenv": "^4.0.0",
-    "lottie": "^0.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.2.0",
-    "react-lottie": "^1.2.3",
-    "react-router-dom": "^6.10.0",
-    "react-scripts": "^5.0.1",
-    "translate": "^0.7.0",
-    "vercel": "^32.3.1",
-    "web-vitals": "^1.1.2"
-  },
-  "overrides": {
-    "react-lottie": {
-      "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
-    }
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "packageManager": "npm@11.19.0",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "npm": "11.19.x"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "npm start --workspace @nigerlan/web",
+    "dev:api": "npm run dev --workspace @nigerlan/api",
+    "start:api": "npm start --workspace @nigerlan/api",
+    "build": "npm run build --workspace @nigerlan/web",
+    "test": "npm test --workspaces",
+    "test:web": "npm test --workspace @nigerlan/web",
+    "test:api": "npm test --workspace @nigerlan/api",
+    "test:known-defects": "node scripts/verify-defects.mjs",
+    "lint": "eslint apps/api apps/web/src scripts .eslintrc.cjs --ext .js,.jsx,.cjs,.mjs --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "security:dependencies": "npm audit --audit-level=high",
+    "security:api": "npm audit --workspace @nigerlan/api --omit=dev --audit-level=high",
+    "check:repo": "node scripts/check-repository.mjs",
+    "security:install": "node scripts/install-gitleaks.mjs",
+    "security:secrets": "node scripts/scan-secrets.mjs"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not ie <= 11",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "allowScripts": {
+    "core-js": false,
+    "core-js-pure": false,
+    "fsevents": false
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "eslint": "8.57.1",
+    "prettier": "3.9.10"
   }
 }
